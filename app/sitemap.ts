@@ -1,37 +1,40 @@
-// app/sitemap.ts
 import { prisma } from '@/lib/prisma';
+import { MetadataRoute } from 'next';
 
-export default async function sitemap() {
-  const baseUrl = 'https://your-domain.com';
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://watch39.ru';
 
-  // Статические страницы
-  const staticPages = ['', '/watches', '/blog'].map((route) => ({
+  // 1. Статические страницы (под твою структуру)
+  const staticPages: MetadataRoute.Sitemap = ['', '/catalog'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
-    priority: 1,
+    priority: 1.0,
   }));
 
-  // Динамические страницы товаров и постов
+  // 2. Динамические страницы часов (выбираем slug вместо id)
   const watches = await prisma.watch.findMany({
-    select: { id: true, updatedAt: true },
+    select: { slug: true, updatedAt: true },
   });
-  const watchPages = watches.map((watch) => ({
-    url: `${baseUrl}/watches/${watch.id}`,
+  
+  const watchPages: MetadataRoute.Sitemap = watches.map((watch: { slug: string; updatedAt: Date }) => ({
+    url: `${baseUrl}/product/${watch.slug}`,
     lastModified: watch.updatedAt,
     changeFrequency: 'monthly',
     priority: 0.8,
   }));
 
+  // 3. Динамические страницы постов блога
   const posts = await prisma.post.findMany({
     where: { published: true },
     select: { slug: true, updatedAt: true },
   });
-  const postPages = posts.map((post) => ({
+  
+  const postPages: MetadataRoute.Sitemap = posts.map((post: { slug: string; updatedAt: Date }) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.updatedAt,
     changeFrequency: 'weekly',
-    priority: 0.9,
+    priority: 0.7,
   }));
 
   return [...staticPages, ...watchPages, ...postPages];
