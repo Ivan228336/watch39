@@ -20,7 +20,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   if (filters.brand) {
     const brandName = filters.brand.charAt(0).toUpperCase() + filters.brand.slice(1);
     title = `Купить часы ${brandName} в Калининграде | Каталог оригиналов 2026`;
-    description = `Ищете оригинальные часы ${brandName}? В нашем каталоге представлены лучшие модели с официальной гарантией. Закажите бесплатную доставку с примеркой.`;
+    description = `Ищете оригинальные часы ${brandName}? В нашем каталоге представлены лучшие модели с官方 гарантией. Закажите бесплатную доставку с примеркой.`;
   }
 
   return {
@@ -67,7 +67,6 @@ export default async function CatalogPage({ searchParams }: Props) {
       '@type': 'ItemList',
       'name': 'Каталог наручных часов watch39',
       'numberOfItems': watches.length,
-      // ЯВНАЯ ТИПИЗАЦИЯ ДЛЯ ВОРКЕРА ТУТ:
       'itemListElement': watches.slice(0, 10).map((watch: any, index: number) => ({
         '@type': 'ListItem',
         'position': index + 1,
@@ -91,7 +90,7 @@ export default async function CatalogPage({ searchParams }: Props) {
       <header className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
           {filters.brand 
-            ? `Оригинальные часы ${brands.find(b => b.slug === filters.brand)?.name || ''} в Калининграде` 
+            ? `Оригинальные часы ${brands.find((b: { slug: string; name: string }) => b.slug === filters.brand)?.name || ''} в Калининграде` 
             : 'Каталог оригинальных наручных часов'}
         </h1>
         <p className="mt-3 text-gray-600 max-w-4xl text-sm sm:text-base leading-relaxed">
@@ -142,7 +141,7 @@ export default async function CatalogPage({ searchParams }: Props) {
                 <Link href="/catalog" className={`text-sm ${!filters.brand ? 'text-blue-600 font-semibold' : 'text-gray-600 hover:text-gray-900'}`}>
                   Все бренды
                 </Link>
-                {brands.map((b: any) => (
+                {brands.map((b: { id: string | number; name: string; slug: string }) => (
                   <Link 
                     key={b.id} 
                     href={`/catalog?brand=${b.slug}${filters.type ? `&type=${filters.type}` : ''}`} 
@@ -188,7 +187,6 @@ export default async function CatalogPage({ searchParams }: Props) {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* ЯВНАЯ ТИПИЗАЦИЯ ДЛЯ ВОРКЕРА ТУТ: */}
               {watches.map((watch: any) => (
                 <article key={watch.id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between group">
                   <div className="p-4 relative">
