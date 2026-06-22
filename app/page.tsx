@@ -1,4 +1,3 @@
-// app/page.tsx
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { WatchCard } from '@/components/WatchCard';
@@ -14,19 +13,24 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // Инициализируем пустые массивы на случай сбоя БД
-  let featuredWatches = [];
-  let recentPosts = [];
-  let brands = [];
-  let categories = [];
+  // Инициализируем пустые массивы с типом any[], чтобы избежать неявного any
+  let featuredWatches: any[] = [];
+  let recentPosts: any[] = [];
+  let brands: any[] = [];
+  let categories: any[] = [];
 
   // Безопасно загружаем данные из БД
   try {
-    featuredWatches = await prisma.watch.findMany({
+    const dbWatches = await prisma.watch.findMany({
       take: 12,
       include: { brand: true },
       orderBy: { id: 'desc' }, 
     });
+    // Сразу приводим цену к числу
+    featuredWatches = dbWatches.map((w: any) => ({
+      ...w,
+      price: Number(w.price),
+    }));
   } catch (error) {
     console.error('❌ Ошибка при получении часов из Prisma:', error);
   }
@@ -35,7 +39,7 @@ export default async function Home() {
     recentPosts = await prisma.post.findMany({
       where: { published: true },
       take: 3,
-      orderBy: { id: 'desc' }, // Заменили на id, если createdAt отсутствует
+      orderBy: { id: 'desc' },
     });
   } catch (error) {
     console.error('❌ Ошибка при получении постов (возможно, таблицы Post нет):', error);
@@ -48,13 +52,13 @@ export default async function Home() {
     console.error('❌ Ошибка при получении брендов/категорий:', error);
   }
 
-  // Формируем JSON-LD микроразметку
+  // Формируем JSON-LD микроразметку с явной типизацией аргументов
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     'name': 'Новинки наручных часов в Калининграде',
     'url': 'https://watch39.ru',
-    'itemListElement': featuredWatches.map((watch, index) => ({
+    'itemListElement': featuredWatches.map((watch: any, index: number) => ({
       '@type': 'ListItem',
       'position': index + 1,
       'url': `https://watch39.ru/product/${watch.slug}`,
@@ -83,12 +87,12 @@ export default async function Home() {
         <section className="mb-10 bg-gray-50 p-4 rounded-xl border border-gray-100">
           <h2 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Популярные направления каталога</h2>
           <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
+            {categories.map((cat: any) => (
               <Link key={cat.id} href={`/catalog/${cat.slug}`} className="bg-white border text-gray-700 hover:text-black hover:border-black px-3 py-1.5 rounded-full text-xs transition font-medium">
                 {cat.name}
               </Link>
             ))}
-            {brands.map((brand) => (
+            {brands.map((brand: any) => (
               <Link key={brand.id} href={`/brand/${brand.slug}`} className="bg-white border text-gray-700 hover:text-black hover:border-black px-3 py-1.5 rounded-full text-xs transition font-medium">
                 Часы {brand.name}
               </Link>
@@ -108,7 +112,7 @@ export default async function Home() {
         
         {featuredWatches.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {featuredWatches.map((watch) => (
+            {featuredWatches.map((watch: any) => (
               <WatchCard key={watch.id} {...watch} />
             ))}
           </div>
@@ -123,7 +127,7 @@ export default async function Home() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Экспертный блог: как выбрать часы</h2>
           {recentPosts.length > 0 ? (
             <div className="space-y-4">
-              {recentPosts.map((post) => (
+              {recentPosts.map((post: any) => (
                 <article key={post.id} className="border-b pb-4 last:border-0">
                   <Link href={`/blog/${post.slug}`} className="text-base font-semibold text-blue-600 hover:text-blue-800 hover:underline block">
                     {post.title}

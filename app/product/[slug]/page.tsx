@@ -1,4 +1,3 @@
-// app/product/[slug]/page.tsx
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -9,7 +8,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// 1. ДИНАМИЧЕСКИЕ МЕТА-ТЕГИ (Генерация на лету для роботов)
+// 1. ДИНАМИЧЕСКИЕ МЕТА-ТЕГИ
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   
@@ -20,9 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!watch) return {};
 
-  // Если в БД нет кастомных SEO-тегов, генерируем бронебойный шаблон под Калининград
+  const priceAsNumber = Number(watch.price);
   const fallbackTitle = `Купить оригинальные часы ${watch.title} в Калининграде — цена, отзывы`;
-  const fallbackDesc = `Заказать наручные часы ${watch.title} за ${watch.price} ₽ в интернет-магазине watch39. Оригинал, официальная гарантия, быстрая доставка по Калининграду.`;
+  const fallbackDesc = `Заказать наручные часы ${watch.title} за ${priceAsNumber} ₽ в интернет-магазине watch39. Оригинал, official гарантия, быстрая доставка по Калининграду.`;
 
   return {
     title: watch.metaTitle || fallbackTitle,
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: watch.metaTitle || fallbackTitle,
       description: watch.metaDescription || fallbackDesc,
       images: watch.imageUrl ? [{ url: watch.imageUrl }] : [],
-      type: 'music.song', // e-commerce использует 'website' или кастомные разметки
+      type: 'website', // Изменили с 'music.song' на стандартный 'website' для e-commerce
     },
   };
 }
@@ -43,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WatchPage({ params }: Props) {
   const { slug } = await params;
 
-  const watch = await prisma.watch.findUnique({
+  const dbWatch = await prisma.watch.findUnique({
     where: { slug },
     include: { 
       brand: true,
@@ -51,12 +50,25 @@ export default async function WatchPage({ params }: Props) {
     },
   });
 
-  if (!watch) notFound();
+  if (!dbWatch) notFound();
+
+  // Санитизация объекта во избежание конфликтов типов Prisma.Decimal и null-объектов отношений
+  const watch = {
+    ...dbWatch,
+    price: Number(dbWatch.price),
+    brand: {
+      name: dbWatch.brand?.name || 'Бренд',
+      slug: dbWatch.brand?.slug || '',
+    },
+    category: {
+      name: dbWatch.category?.name || 'Каталог',
+      slug: dbWatch.category?.slug || '',
+    }
+  };
 
   const isAvailable = watch.stockKaliningrad > 0;
 
-  // 3. МИКРОРАЗМЕТКА SCHEMA.ORG (JSON-LD Product)
-  // Поисковики подтянут цену, валюту и наличие прямо в поисковую выдачу
+  // 3. МИКРОРАЗМЕТКА SCHEMA.ORG
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -82,25 +94,30 @@ export default async function WatchPage({ params }: Props) {
 
   return (
     <main className="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
-      {/* Инъекция микроразметки */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Навигационная цепочка (Хлебные крошки) — Важно для SEO-навигации */}
       <nav className="text-xs text-gray-500 mb-6 flex items-center gap-2" aria-label="Хлебные крошки">
         <Link href="/" className="hover:text-black transition">Главная</Link>
         <span>/</span>
-        <Link href={`/brand/${watch.brand.slug}`} className="hover:text-black transition">Часы {watch.brand.name}</Link>
-        <span>/</span>
-        <Link href={`/catalog/${watch.category.slug}`} className="hover:text-black transition">{watch.category.name}</Link>
-        <span>/</span>
+        {watch.brand.slug && (
+          <>
+            <Link href={`/brand/${watch.brand.slug}`} className="hover:text-black transition">Часы {watch.brand.name}</Link>
+            <span>/</span>
+          </>
+        )}
+        {watch.category.slug && (
+          <>
+            <Link href={`/catalog/${watch.category.slug}`} className="hover:text-black transition">{watch.category.name}</Link>
+            <span>/</span>
+          </>
+        )}
         <span className="text-gray-900 truncate" aria-current="page">{watch.modelCode}</span>
       </nav>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 bg-white p-6 rounded-2xl border">
-        {/* Блок изображения с SEO-атрибутами */}
         <div className="relative w-full aspect-square bg-gray-50 rounded-xl overflow-hidden p-4 border border-gray-100 flex items-center justify-center">
           <Image
             src={watch.imageUrl || '/placeholder.png'}
@@ -108,23 +125,20 @@ export default async function WatchPage({ params }: Props) {
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-contain p-6"
-            priority // Загружаем главное изображение карточки в первую очередь
+            priority 
           />
         </div>
 
-        {/* Информационный блок */}
         <div className="flex flex-col justify-between">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
               Код модели: {watch.modelCode}
             </span>
             
-            {/* H1 строго содержит полное название с брендом */}
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 leading-tight">
               {watch.title}
             </h1>
 
-            {/* Цена */}
             <div className="mt-4 p-4 bg-slate-50 rounded-xl flex items-baseline justify-between">
               <div>
                 <p className="text-xs text-slate-500">Цена в Калининграде</p>
@@ -143,7 +157,6 @@ export default async function WatchPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Описание */}
             <section className="mt-6 border-t pt-6">
               <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
                 Описание и характеристики
@@ -154,7 +167,6 @@ export default async function WatchPage({ params }: Props) {
             </section>
           </div>
 
-          {/* Коммерческие триггеры для Яндекса */}
           <div className="mt-8 border-t pt-6 grid grid-cols-2 gap-4 text-xs text-slate-500">
             <div className="flex items-center gap-2">
               <span className="text-lg">🛡️</span>
