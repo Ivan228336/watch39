@@ -15,7 +15,9 @@ export async function generateStaticParams() {
     where: { published: true },
     select: { slug: true },
   });
-  return posts.map((post) => ({ slug: post.slug }));
+  
+  // Явно указываем тип { slug: string } для параметра post
+  return posts.map((post: { slug: string }) => ({ slug: post.slug }));
 }
 
 // 2. Генерация идеальных SEO мета-тегов на основе статьи
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {};
 
   return {
-    title: `${post.title} | Блог интернет-магазина watch39`,
+    title: `${post.title} | Блог internet-магазина watch39`,
     description: post.excerpt || 'Полезные советы экспертов часового дела в Калининграде. Как выбрать оригинальные наручные часы.',
     alternates: {
       canonical: `https://watch39.ru/blog/${slug}`,
@@ -71,7 +73,7 @@ export default async function BlogPostPage({ params }: Props) {
       'name': 'watch39',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://watch39.ru/logo.png', // Замени на реальный лого при наличии
+        'url': 'https://watch39.ru/logo.png',
       },
     },
   };
