@@ -1,4 +1,3 @@
-// app/catalog/[categorySlug]/page.tsx
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -9,10 +8,11 @@ interface Props {
   params: Promise<{ categorySlug: string }>;
 }
 
-// Включаем генерацию статических путей при сборке на Vercel
+// Генерируем статические пути для билда
 export async function generateStaticParams() {
   const categories = await prisma.category.findMany({ select: { slug: true } });
-  return categories.map((cat) => ({ categorySlug: cat.slug }));
+  // Твой фикс с явным указанием типа объекта 'cat' решает проблему с 'implicit any'
+  return categories.map((cat: { slug: string }) => ({ categorySlug: cat.slug }));
 }
 
 // Динамические SEO мета-теги под категорию
@@ -32,22 +32,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CategoryPage({ params }: Props) {
   const { categorySlug } = await params;
 
-  // Тянем категорию и товары параллельно (оптимизация производительности)
   const category = await prisma.category.findUnique({ where: { slug: categorySlug } });
   if (!category) notFound();
 
-  const watches = await prisma.watch.findMany({
+  const dbWatches = await prisma.watch.findMany({
     where: { category: { slug: categorySlug } },
     include: { brand: true },
     orderBy: { id: 'desc' },
   });
 
-  // Микроразметка Schema.org для списка товаров категории
+  // ФИКС ТИПОВ: Конвертируем Decimal в number для ProductGrid
+  const sanitizedWatches = dbWatches.map((watch: any) => ({
+    ...watch,
+    price: Number(watch.price),
+    brand: {
+      name: watch.brand?.name || '',
+      slug: watch.brand?.slug || '',
+    },
+  }));
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     'name': `${category.name} часы в Калининграде`,
-    'description': category.metaDescription,
+    'description': category.metaDescription || undefined, // Защита от null для строгого режима TS
     'url': `https://watch39.ru/catalog/${categorySlug}`,
   };
 
@@ -72,7 +80,8 @@ export default async function CategoryPage({ params }: Props) {
         </p>
       </header>
 
-      <ProductGrid watches={watches} />
+      {/* Передаем типизированный массив */}
+      <ProductGrid watches={sanitizedWatches} />
     </main>
   );
 }
