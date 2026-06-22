@@ -11,7 +11,7 @@ interface Props {
 
 export async function generateStaticParams() {
   const brands = await prisma.brand.findMany({ select: { slug: true } });
-  return brands.map((b) => ({ brandSlug: b.slug }));
+  return brands.map((b: { slug: string }) => ({ brandSlug: b.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -49,7 +49,7 @@ export default async function BrandPage({ params }: Props) {
   });
 
   // КЛЮЧЕВОЙ ФИКС СЕО-МОНСТРА: Маппим данные, гарантируя TypeScript отсутствие null и объектов Decimal
-  const sanitizedWatches = dbWatches.map((watch) => ({
+  const sanitizedWatches = dbWatches.map((watch: any) => ({
     id: watch.id,
     title: watch.title,
     slug: watch.slug,

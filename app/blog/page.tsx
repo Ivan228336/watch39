@@ -37,7 +37,7 @@ export default async function BlogIndexPage() {
         <p className="text-gray-500 text-sm">Новые статьи подготавливаются к публикации...</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
+          {posts.map((post: any) => (
             <article key={post.id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
               <div>
                 {post.imageUrl && (

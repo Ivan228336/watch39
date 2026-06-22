@@ -1,4 +1,3 @@
-// app/catalog/page.tsx
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -13,14 +12,12 @@ interface Props {
   }>;
 }
 
-// 1. Динамические SEO мета-теги с учетом выбранных фильтров
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const filters = await searchParams;
   let title = 'Каталог оригинальных наручных часов в Калининграде | watch39';
   let description = 'Официальный каталог наручных часов в интернет-магазине watch39. В наличии японские и швейцарские бренды. Бесплатная доставка и примерка по Калининграду.';
 
   if (filters.brand) {
-    // Делаем первую букву заглавной для красоты в тайтле
     const brandName = filters.brand.charAt(0).toUpperCase() + filters.brand.slice(1);
     title = `Купить часы ${brandName} в Калининграде | Каталог оригиналов 2026`;
     description = `Ищете оригинальные часы ${brandName}? В нашем каталоге представлены лучшие модели с официальной гарантией. Закажите бесплатную доставку с примеркой.`;
@@ -34,19 +31,15 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function CatalogPage({ searchParams }: Props) {
-  // В Next.js 15+ searchParams — это Promise, обязательно разворачиваем через await
   const filters = await searchParams;
   
-  // 2. Параллельно запрашиваем фильтры и товары для максимальной скорости (Query Optimization)
   const [brands, allWatches] = await Promise.all([
     prisma.brand.findMany({ select: { id: true, name: true, slug: true } }),
     prisma.watch.findMany({
       where: {
-        // Фильтрация по бренду (если выбран slug бренда)
         ...(filters.brand && {
           brand: { slug: { equals: filters.brand, mode: 'insensitive' } }
         }),
-        // Фильтрация по типу механизма (кварц/механика)
         ...(filters.type && {
             category: {
                 slug: { equals: filters.type, mode: 'insensitive' }
@@ -54,7 +47,6 @@ export default async function CatalogPage({ searchParams }: Props) {
         }),
       },
       include: { brand: true },
-      // Сортировка цены или новизны
       orderBy: filters.sort === 'price_asc' 
         ? { price: 'asc' } 
         : filters.sort === 'price_desc' 
@@ -63,13 +55,11 @@ export default async function CatalogPage({ searchParams }: Props) {
     })
   ]);
 
-  // Санитизация данных: приведение Decimal к числу и безопасные строки
-  const watches = allWatches.map(w => ({
+  const watches = allWatches.map((w: any) => ({
     ...w,
     price: Number(w.price)
   }));
 
-  // 3. Микроразметка JSON-LD для Google/Яндекс Сниппетов (Общий список товаров)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SearchResultsPage',
@@ -77,7 +67,8 @@ export default async function CatalogPage({ searchParams }: Props) {
       '@type': 'ItemList',
       'name': 'Каталог наручных часов watch39',
       'numberOfItems': watches.length,
-      'itemListElement': watches.slice(0, 10).map((watch, index) => ({
+      // ЯВНАЯ ТИПИЗАЦИЯ ДЛЯ ВОРКЕРА ТУТ:
+      'itemListElement': watches.slice(0, 10).map((watch: any, index: number) => ({
         '@type': 'ListItem',
         'position': index + 1,
         'offers': {
@@ -97,7 +88,6 @@ export default async function CatalogPage({ searchParams }: Props) {
       
       <Breadcrumbs items={[{ label: 'Каталог часов' }]} />
 
-      {/* Продающий коммерческий оффер в шапке */}
       <header className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
           {filters.brand 
@@ -107,11 +97,9 @@ export default async function CatalogPage({ searchParams }: Props) {
         <p className="mt-3 text-gray-600 max-w-4xl text-sm sm:text-base leading-relaxed">
           Добро пожаловать в сертифицированный магазин оригинальных часов <span className="font-semibold text-gray-900">watch39</span>. 
           Все модели в каталоге поставляются напрямую от дистрибьюторов, имеют официальную гарантию до 2-х лет и кассовый чек. 
-          {/* <span className="text-blue-600 font-medium"> Выбирайте до 3-х моделей на бесплатную примерку курьером по Калининграду!</span> */}
         </p>
       </header>
 
-      {/* Маркетинговые триггеры доверия (Повышают конверсию из захода в клик) */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 bg-slate-50 p-4 rounded-xl border border-slate-100">
         <div className="flex items-center gap-3">
           <span className="text-2xl">🛡️</span>
@@ -123,7 +111,7 @@ export default async function CatalogPage({ searchParams }: Props) {
         <div className="flex items-center gap-3">
           <span className="text-2xl">🚗</span>
           <div>
-            <h4 className="text-xs sm:text-sm font-bold text-gray-900">Примерка в Калининграде</h4>
+            <h4 className="text-xs sm:text-sm font-bold text-gray-900">Примерка в Клд</h4>
             <p className="text-[11px] text-gray-500">Идеальная посадка</p>
           </div>
         </div>
@@ -144,19 +132,17 @@ export default async function CatalogPage({ searchParams }: Props) {
       </section>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* БЛОК ФИЛЬТРОВ (Серверный сайдбар для SEO ссылок) */}
         <aside className="w-full lg:w-64 shrink-0 space-y-6">
           <div className="border rounded-xl p-5 bg-white sticky top-4">
             <h3 className="font-bold text-gray-900 mb-4 pb-2 border-b text-sm uppercase tracking-wider">Фильтры каталога</h3>
             
-            {/* Бренд-фильтр */}
             <div className="mb-6">
               <span className="block text-xs font-semibold text-gray-500 uppercase mb-2">Бренды</span>
               <div className="space-y-2 flex flex-col">
                 <Link href="/catalog" className={`text-sm ${!filters.brand ? 'text-blue-600 font-semibold' : 'text-gray-600 hover:text-gray-900'}`}>
                   Все бренды
                 </Link>
-                {brands.map(b => (
+                {brands.map((b: any) => (
                   <Link 
                     key={b.id} 
                     href={`/catalog?brand=${b.slug}${filters.type ? `&type=${filters.type}` : ''}`} 
@@ -168,7 +154,6 @@ export default async function CatalogPage({ searchParams }: Props) {
               </div>
             </div>
 
-            {/* Механизм-фильтр */}
             <div className="mb-6">
               <span className="block text-xs font-semibold text-gray-500 uppercase mb-2">Механизм</span>
               <div className="space-y-2 flex flex-col">
@@ -184,7 +169,6 @@ export default async function CatalogPage({ searchParams }: Props) {
               </div>
             </div>
 
-            {/* Сортировка */}
             <div>
               <span className="block text-xs font-semibold text-gray-500 uppercase mb-2">Сортировка</span>
               <div className="space-y-2 flex flex-col">
@@ -196,7 +180,6 @@ export default async function CatalogPage({ searchParams }: Props) {
           </div>
         </aside>
 
-        {/* СЕТКА ТОВАРОВ */}
         <section className="flex-1">
           {watches.length === 0 ? (
             <div className="border border-dashed rounded-xl p-12 text-center bg-gray-50">
@@ -205,10 +188,10 @@ export default async function CatalogPage({ searchParams }: Props) {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {watches.map((watch) => (
+              {/* ЯВНАЯ ТИПИЗАЦИЯ ДЛЯ ВОРКЕРА ТУТ: */}
+              {watches.map((watch: any) => (
                 <article key={watch.id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between group">
                   <div className="p-4 relative">
-                    {/* Метка наличия в регионе */}
                     <span className="absolute top-6 left-6 z-10 bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider border border-emerald-200">
                       В наличии в Клд
                     </span>
@@ -242,7 +225,6 @@ export default async function CatalogPage({ searchParams }: Props) {
                       </span>
                     </div>
                     
-                    {/* Кнопка ведет сразу на карточку товара для оформления покупки/примерки */}
                     <Link 
                       href={`/product/${watch.slug}`}
                       className="w-full block text-center bg-gray-900 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-blue-600 transition text-sm shadow-sm"
@@ -257,7 +239,6 @@ export default async function CatalogPage({ searchParams }: Props) {
         </section>
       </div>
 
-      {/* ТЯЖЕЛЫЙ SEO-БЛОК В ПОДВАЛЕ ДЛЯ КРАУЛЕРОВ ЯНДЕКСА И GOOGLE (LSI Оптимизация) */}
       <footer className="mt-16 border-t pt-10 bg-slate-50 -mx-4 px-4 sm:-mx-8 sm:px-8 py-10 rounded-b-2xl">
         <div className="prose max-w-none text-gray-600 text-xs sm:text-sm space-y-4">
           <h2 className="text-lg font-bold text-gray-900">Где купить оригинальные наручные часы в Калининграде?</h2>
@@ -270,7 +251,7 @@ export default async function CatalogPage({ searchParams }: Props) {
           </p>
           <h3 className="text-sm font-bold text-gray-900 mt-4">Преимущества локальной покупки в watch39</h3>
           <p>
-            Главное неудобство обычных интернет-магазинов — невозможность оценить габариты и вес часов на руке до момента оплаты. Мы полностью решили эту проблему. Выберите любые понравившиеся модели, и курьер бесплатно доставит их по Калининграду. Вы сможете рассмотреть аксессуар, проверить работу хронографа или календаря, примерить его на запястье и принять взвешенное решение о покупке. Каждая покупка сопровождается товарным и кассовым чеком, а также официальным гарантийным талоном, который принимается в любых сертифицированных часовых мастерских.
+            Главное неудобство обычных интернет-магазинов — невозможность оценить габариты и вес часов на руке до момента оплаты. Мы полностью решили эту проблему. Выберите любые понравившиеся модели, и курьер бесплатно доставит их по Калининграду. Каждая покупка сопровождается товарным и кассовым чеком, а также официальным гарантийным талоном, который принимается в любых сертифицированных часовых мастерских.
           </p>
         </div>
       </footer>
