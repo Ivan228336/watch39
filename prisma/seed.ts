@@ -1,6 +1,6 @@
 // prisma/seed.ts
 import 'dotenv/config';
-import { PrismaClient } from '../app/generated/prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from "@prisma/adapter-pg";
 import { seoBrands, seoCategories, seoWatches, articles } from './seed-data';
 
