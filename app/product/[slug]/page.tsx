@@ -10,7 +10,7 @@ export async function generateStaticParams() {
     select: { slug: true },
   });
 
-  return watches.map((watch) => ({
+  return watches.map((watch: any) => ({
     slug: watch.slug,
   }));
 }
