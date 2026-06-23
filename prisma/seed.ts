@@ -14,35 +14,22 @@ const prisma = new PrismaClient({
 async function main() {
   console.log(`🌱 SEO-оптимизация БД: Начинаем очистку и наполнение...`);
 
-  // Очищаем таблицы в правильном порядке из-за Foreign Keys
+  // Из-за каскадного удаления (onDelete: Cascade) в схеме, 
+  // удаление часов автоматически очистит и таблицу WatchImage!
   await prisma.watch.deleteMany();
   await prisma.brand.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.post.deleteMany(); // Добавим очистку постов для порядка
+
   console.log('🔹 Запуск SEO-оптимизированного сидинга статей...');
-
   for (const article of articles) {
-    const post = await prisma.post.upsert({
+    await prisma.post.upsert({
       where: { slug: article.slug },
-      update: {
-        title: article.title,
-        content: article.content,
-        excerpt: article.excerpt,
-        imageUrl: article.imageUrl,
-        published: article.published,
-      },
-      create: {
-        slug: article.slug,
-        title: article.title,
-        content: article.content,
-        excerpt: article.excerpt,
-        imageUrl: article.imageUrl,
-        published: article.published,
-      },
+      update: article,
+      create: article,
     });
-    console.log(`✅ Статья записана: /blog/${post.slug}`);
+    console.log(`✅ Статья записана: /blog/${article.slug}`);
   }
-
-  console.log('🎉 Все SEO-лонгриды успешно добавлены в базу данных!');
 
   console.log(`🔹 Заливаем SEO-бренды (${seoBrands.length})...`);
   for (const brand of seoBrands) {
@@ -54,11 +41,10 @@ async function main() {
     await prisma.category.create({ data: cat });
   }
 
-  // Получаем созданные сущности для маппинга по именам/слагам
   const allBrands = await prisma.brand.findMany();
   const allCategories = await prisma.category.findMany();
 
-  console.log(`🔹 Связываем и добавляем модели часов (${seoWatches.length})...`);
+  console.log(`🔹 Связываем модели часов и генерируем SEO-галереи (${seoWatches.length})...`);
   
   let insertedCount = 0;
 
@@ -71,20 +57,25 @@ async function main() {
       continue;
     }
 
-    // Убираем временные поля маппинга перед вставкой в Watch
-    const { brandName, categorySlug, ...watchData } = w;
+    // Деструктуризация: вытаскиваем служебные поля (brandName, categorySlug) 
+    // и массив картинок (images), чтобы они не шли в саму модель Watch напрямую.
+    const { brandName, categorySlug, images, ...watchData } = w;
 
     await prisma.watch.create({
       data: {
         ...watchData,
         brandId: dbBrand.id,
         categoryId: dbCategory.id,
+        // ВОТ ТУТ ПРОИСХОДИТ МАГИЯ ПРИЗМЫ ДЛЯ ССЫЛОК ГАЛЕРЕИ:
+        images: {
+          create: images ?? [] // Создает записи в таблице WatchImage
+        }
       }
     });
     insertedCount++;
   }
 
-  console.log(`✅ SEO-миграция завершена! Успешно добавлено ${insertedCount} моделей часов.`);
+  console.log(`🎉 SEO-миграция завершена! Успешно добавлено ${insertedCount} моделей часов с галереями.`);
 }
 
 main()

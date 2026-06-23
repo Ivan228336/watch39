@@ -1,5 +1,28 @@
 // prisma/seed-data.ts
 
+
+// model Watch {
+//   id              String   @id @default(uuid())
+//   modelCode       String   @unique // GA-2100-1A1
+//   title           String   // Полное SEO-название: Наручные часы Casio G-Shock GA-2100-1A1
+//   slug            String   @unique // Для URL товара: /product/casio-g-shock-ga-2100-1a1
+//   price           Int
+//   description     String
+//   imageUrl        String?
+//   inStock         Boolean  @default(true)
+//   stockKaliningrad Int     @default(0) // Важно для локального SEO ранжирования!
+  
+//   brandId         String
+//   brand           Brand    @relation(fields: [brandId], references: [id])
+//   categoryId      String
+//   category        Category @relation(fields: [categoryId], references: [id])
+
+//   // SEO-переопределения (если пустые — генерируем шаблоном)
+//   metaTitle       String?
+//   metaDescription String?
+//   h1              String?
+// }
+
 export const seoBrands = [
   { name: "Casio", slug: "casio", metaTitle: "Японские часы Casio — купить в Калининграде", metaDescription: "Огромный выбор оригинальных часов Casio (G-Shock, Edifice) в Калининграде. Официальная гарантия, лучшая цена." },
   { name: "Tissot", slug: "tissot", metaTitle: "Швейцарские часы Tissot — каталог оригиналов", metaDescription: "Купить оригинальные швейцарские часы Tissot в Калининграде. Легендарная коллекция PRX и спортивные хронографы." },
@@ -33,7 +56,12 @@ export const seoWatches = [
     inStock: true,
     stockKaliningrad: 5,
     metaTitle: "Часы Casio G-Shock GA-2100-1A1 купить в Калининграде — цена, фото",
-    metaDescription: "Оригинальные «Casio-Дубы» GA-2100-1A1 в наличии в Калининграде. Ударопрочный карбоновый корпус, водозащита 200м. Гарантия 2 года."
+    metaDescription: "Оригинальные «Casio-Дубы» GA-2100-1A1 в наличии в Калининграде. Ударопрочный карбоновый корпус, водозащита 200м. Гарантия 2 года.",
+    model3dUrl: null,
+    images: [
+      { url: "/GA-2100-1A1_1.webp", alt: "Японские часы Casio G-Shock GA-2100-1A1 в магазине на Южном Рынке в Калининграде" },
+      { url: "/GA-2100-1A1_2.webp", alt: "Наручные часы Casio GA-2100-1A1 вид сбоку — ТЦ на Южном" }
+    ]
   },
   {
     modelCode: "T137.410.11.051.00",
