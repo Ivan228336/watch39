@@ -4,6 +4,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 
+
+export async function generateStaticParams() {
+  const watches = await prisma.watch.findMany({
+    select: { slug: true },
+  });
+
+  return watches.map((watch) => ({
+    slug: watch.slug,
+  }));
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
