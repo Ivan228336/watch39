@@ -1,8 +1,9 @@
 // prisma/seed.ts
 import 'dotenv/config';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Gender } from '@prisma/client';
 import { PrismaPg } from "@prisma/adapter-pg";
 import { seoBrands, seoCategories, seoWatches, articles } from './seed-data';
+
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
@@ -61,18 +62,21 @@ async function main() {
     // и массив картинок (images), чтобы они не шли в саму модель Watch напрямую.
     const { brandName, categorySlug, images, ...watchData } = w;
 
-    await prisma.watch.create({
-      data: {
-        ...watchData,
-        brandId: dbBrand.id,
-        categoryId: dbCategory.id,
-        // ВОТ ТУТ ПРОИСХОДИТ МАГИЯ ПРИЗМЫ ДЛЯ ССЫЛОК ГАЛЕРЕИ:
-        images: {
-          create: images ?? [] // Создает записи в таблице WatchImage
-        }
+    const watchCreateData = {
+      ...watchData,
+      gender: watchData.gender as Gender, // <-- ключевое исправление
+      brandId: dbBrand.id,
+      categoryId: dbCategory.id,
+      images: {
+        create: (images ?? []).filter(img => img.url !== null)
       }
+    };
+
+    await prisma.watch.create({
+      data: watchCreateData,
     });
     insertedCount++;
+
   }
 
   console.log(`🎉 SEO-миграция завершена! Успешно добавлено ${insertedCount} моделей часов с галереями.`);

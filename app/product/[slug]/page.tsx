@@ -122,7 +122,7 @@ export default async function WatchPage({ params }: Props) {
         <WatchGallery 
           title={watch.title} 
           mainImage={watch.imageUrl} 
-          images={watch.images} 
+          images={watch.images.filter(img => img.url !== null) as { id: string; url: string; alt: string | null; }[]}
         />
         {/* ================================== */}
 

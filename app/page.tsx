@@ -188,7 +188,7 @@ export default async function Home() {
             <div className="w-full h-80 bg-stone-100 overflow-hidden border border-stone-200">
               <iframe 
                 src="https://yandex.ru/map-widget/v1/?um=constructor%3A52c4c0848959dc89ec7bf17bfb038b32ee35991e9695722e38cce36af23b92a5&amp;source=constructor" 
-                className="w-full h-full grayscale hover:grayscale-0 transition-all duration-500" 
+                className="w-full h-full hover:scale-105 duration-500" 
                 allowFullScreen 
               />
             </div>
@@ -203,7 +203,7 @@ export default async function Home() {
             <div className="w-full h-80 bg-stone-100 overflow-hidden border border-stone-200">
               <iframe 
                 src="https://yandex.ru/map-widget/v1/?um=constructor%3A61efd2fa38a305789a53f072af1ffade38e41b12c333c41240517a8d32ffb92a&amp;source=constructor" 
-                className="w-full h-full grayscale hover:grayscale-0 transition-all duration-500" 
+                className="w-full h-full hover:scale-105 duration-500" 
                 allowFullScreen 
               />
             </div>
@@ -258,7 +258,7 @@ export default async function Home() {
                 Мы поставляем сертифицированные мужские и женские модели напрямую от дистрибьюторов. Вся продукция проходит предпродажную проверку точности хода.
               </p>
               <p className="italic text-stone-500 pt-4 border-t border-stone-300">
-                Жители Калининграда могут заказать примерку нескольких моделей с доставкой на дом или посетить наши оффлайн точки.
+                Жители Калининграда могут посетить наши магазины для примерки и поккупки продукции.
               </p>
             </div>
           </div>

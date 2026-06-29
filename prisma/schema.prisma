@@ -13,6 +13,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Gender {
+  MALE    // Мужские
+  FEMALE  // Женские
+  UNISEX  // Унисекс
+}
+
 
 // Фрагмент идеальной SEO-структуры в schema.prisma
 model Brand {
@@ -45,6 +51,7 @@ model Watch {
   // --- НОВЫЕ ПОЛЯ ---
   images          WatchImage[] // Связь «один ко многим» для галереи
   model3dUrl      String?      // Опциональная ссылка на 3D-модель (формат .glb)
+  gender          Gender       @default(UNISEX)
   // ------------------
 
   inStock         Boolean      @default(true)
@@ -63,7 +70,7 @@ model Watch {
 // Новая модель для галереи картинок
 model WatchImage {
   id        String   @id @default(uuid())
-  url       String   // Ссылка на картинку
+  url       String?   // Ссылка на картинку
   alt       String?  // СВЕРХВАЖНО ДЛЯ SEO! Сюда будем писать "Часы Casio GA-2100-1A1 — вид сбоку"
   watchId   String
   watch     Watch    @relation(fields: [watchId], references: [id], onDelete: Cascade)

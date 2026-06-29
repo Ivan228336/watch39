@@ -30,9 +30,9 @@ export const Footer = () => {
           <div>
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-stone-900 mb-4">Связь</h3>
             <p className="text-sm text-stone-600 font-serif">
-              Калининград, ул. Интернациональная<br />
-              Калининград, ул. Киевская<br />
-              <a href="tel:+74012000000" className="hover:text-stone-900 underline mt-2 block">+7 (4012) 00-00-00</a>
+              Калининград, ул. Интернациональная, 30<br />
+              Калининград, ул. Киевская, 95<br />
+              <a href="tel:+79211075725" className="hover:text-stone-900 underline mt-2 block">+7 (9211) 07-57-25</a>
             </p>
           </div>
         </div>
