@@ -6,6 +6,6 @@ export default function robots() {
       allow: '/',
       disallow: ['/admin', '/api'],
     },
-    sitemap: 'https://your-domain.com/sitemap.xml',
+    sitemap: 'https://watch39.ru/sitemap.xml',
   };
 }

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { WatchGallery } from '@/components/WatchGallery';
+import { BreadcrumbSchema } from '@/components/BreadcrumbSchema';
 
 export async function generateStaticParams() {
   const watches = await prisma.watch.findMany({ select: { slug: true } });
@@ -94,8 +95,18 @@ export default async function WatchPage({ params }: Props) {
     },
   };
 
+  const breadcrumbItems = [];
+  if (watch.brand.slug) {
+    breadcrumbItems.push({ label: `Часы ${watch.brand.name}`, href: `/brand/${watch.brand.slug}` });
+  }
+  if (watch.category.slug) {
+    breadcrumbItems.push({ label: watch.category.name, href: `/catalog/${watch.category.slug}` });
+  }
+  breadcrumbItems.push({ label: watch.title });
+
   return (
     <main className="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+      <BreadcrumbSchema items={breadcrumbItems} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <nav className="text-xs text-gray-500 mb-6 flex items-center gap-2" aria-label="Хлебные крошки">

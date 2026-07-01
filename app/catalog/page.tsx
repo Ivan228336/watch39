@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { BreadcrumbSchema } from '@/components/BreadcrumbSchema';
 
 interface Props {
   searchParams: Promise<{
@@ -83,6 +84,7 @@ export default async function CatalogPage({ searchParams }: Props) {
 
   return (
     <main className="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+      <BreadcrumbSchema items={[{ label: 'Каталог часов', href: '/catalog' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
       <Breadcrumbs items={[{ label: 'Каталог часов' }]} />

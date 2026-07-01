@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import Image from 'next/image';
 import { WatchCard } from '@/components/WatchCard';
+import { LocalBusinessSchema } from '@/components/LocalBusinessSchema';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default async function Home() {
     const dbWatches = await prisma.watch.findMany({
       take: 13, // Берем 13, чтобы 1 ушла в Hero-блок, а 12 в сетку
       include: { brand: true },
-      orderBy: { id: 'desc' }, 
+      orderBy: { price: 'desc' }, 
     });
     featuredWatches = dbWatches.map((w: any) => ({
       ...w,
@@ -64,6 +65,7 @@ export default async function Home() {
 
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-[1400px] bg-white text-stone-900 selection:bg-stone-900 selection:text-white">
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
