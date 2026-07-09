@@ -1,39 +1,12 @@
 // prisma/seed-data.ts
 
-
-// model Watch {
-//   id              String   @id @default(uuid())
-//   modelCode       String   @unique // GA-2100-1A1
-//   title           String   // Полное SEO-название: Наручные часы Casio G-Shock GA-2100-1A1
-//   slug            String   @unique // Для URL товара: /product/casio-g-shock-ga-2100-1a1
-//   price           Int
-//   description     String
-//   imageUrl        String?
-//   inStock         Boolean  @default(true)
-//   stockKaliningrad Int     @default(0) // Важно для локального SEO ранжирования!
-  
-//   brandId         String
-//   brand           Brand    @relation(fields: [brandId], references: [id])
-//   categoryId      String
-//   category        Category @relation(fields: [categoryId], references: [id])
-
-//   // SEO-переопределения (если пустые — генерируем шаблоном)
-//   metaTitle       String?
-//   metaDescription String?
-//   h1              String?
-// }
-
 export const seoBrands = [
   { name: "Casio", slug: "casio", metaTitle: "Японские часы Casio — купить в Калининграде", metaDescription: "Огромный выбор оригинальных часов Casio (G-Shock, Edifice) в Калининграде. Официальная гарантия, лучшая цена." },
   { name: "Tissot", slug: "tissot", metaTitle: "Швейцарские часы Tissot — каталог оригиналов", metaDescription: "Купить оригинальные швейцарские часы Tissot в Калининграде. Легендарная коллекция PRX и спортивные хронографы." },
   { name: "Orient", slug: "orient", metaTitle: "Механические часы Orient — цены и каталог", metaDescription: "Японские часы Orient с автоподзаводом. Классические Bambino и дайверские Kamasu в наличии." },
   { name: "Seiko", slug: "seiko", metaTitle: "Часы Seiko — купить оригинальные японские часы", metaDescription: "Каталог японских часов Seiko (5 Sports, Presage). Официальный дилер в Калининграде." },
   { name: "Citizen", slug: "citizen", metaTitle: "Часы Citizen Eco-Drive с солнечной батареей", metaDescription: "Технологичные часы Citizen Eco-Drive. Не требуют замены батарейки. Доставка по Калининградской области." },
-  // { name: "Hamilton", slug: "hamilton", metaTitle: "Часы Hamilton — американская классика", metaDescription: "Военные механические часы Hamilton Khaki Field. Оригиналы с гарантией." },
-  // { name: "Certina", slug: "certina", metaTitle: "Швейцарские часы Certina DS — ультразащита", metaDescription: "Сверхнадежные спортивные часы Certina с системой Double Security. Водонепроницаемость 200м." },
   { name: "Swatch", slug: "swatch", metaTitle: "Яркие часы Swatch — оригинальный дизайн", metaDescription: "Швейцарские молодежные часы Swatch. Кварцевые хронографы Irony." },
-  // { name: "Diesel", slug: "diesel", metaTitle: "Брутальные часы Diesel — массивный стиль", metaDescription: "Fashion-часы Diesel Mega Chief для мужчин. Крупный корпус, оригинальный дизайн." },
-  // { name: "Fossil", slug: "fossil", metaTitle: "Американские часы Fossil — классика и винтаж", metaDescription: "Наручные часы Fossil на кожаных ремешках. Стильный аксессуар на каждый день." },
   { name: "Festina", slug: "festina", metaTitle: "Испанские часы Festina — спорт и элегантность", metaDescription: "Оригинальные часы Festina в Калининграде. Хронографы, дайверские модели, точный кварцевый механизм. Гарантия, выгодные цены." },
   { name: "Штурманские", slug: "shturmanskie", metaTitle: "Часы Штурманские — легендарная точность СССР", metaDescription: "Купить культовые механические часы «Штурманские» с автоподзаводом. Водонепроницаемость, хакерский механизм. Доставка по Калининграду." },
   { name: "Командирские", slug: "komandirskie", metaTitle: "Часы Командирские — надежность для активных", metaDescription: "Мужские часы «Командирские» с автоподзаводом и противоударным стеклом. Идеальны для экстрима. Оригиналы в Калининграде." },
@@ -56,7 +29,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 7990,
     description: "Цифровые часы Casio AE-1500WH-8B из коллекции Standart в крупном полимерном корпусе темно-серого оттенка с инверсионным дисплеем на полимерном ремешке. Оснащены базовым функционалом: отображение времени, даты и дня недели, секундомер, таймер, 5 ежедневных будильников, ежечасный сигнал. Батарея рассчитана на 10 лет. Водонепроницаемость 100 метров. Отличный выбор для повседневной носки.",
-    imageUrl: "/AE-1500WH-8B_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/AE-1500WH-8B/AE-1500WH-8B_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -64,7 +37,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio AE-1500WH-8B с крупным инверсионным дисплеем в наличии в Калининграде. Водонепроницаемость 100 м, батарея 10 лет. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/AE-1500WH-8B_2.webp", alt: "Наручные часы Casio AE-1500WH-8B в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/AE-1500WH-8B/AE-1500WH-8B_2.webp", alt: "Наручные часы Casio AE-1500WH-8B в магазине Калининграда" }
     ]
   },
   {
@@ -75,7 +48,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 3190,
     description: "Японские кварцевые часы Casio AE-1500WHX-3A из серии Illuminator. Крупный цифровой дисплей с оранжевой подсветкой. Второй часовой пояс, секундомер с точностью 1/100 с на 24 часа, таймер обратного отсчета, 5 будильников. Водонепроницаемость 100 м. Батарея на 10 лет. Серый ЖК-циферблат, пластиковый корпус и ремешок.",
-    imageUrl: "/AE-1500WHX-3A_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/AE-1500WHX-3A/AE-1500WHX-3A_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -83,7 +56,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio AE-1500WHX-3A с хронографом и оранжевой подсветкой в наличии в Калининграде. Водонепроницаемость 100 м, батарея 10 лет. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/AE-1500WHX-3A_2.jpg", alt: "Наручные часы Casio AE-1500WHX-3A в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/AE-1500WHX-3A/AE-1500WHX-3A_2.webp", alt: "Наручные часы Casio AE-1500WHX-3A в магазине Калининграда" }
     ]
   },
   {
@@ -94,7 +67,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 2830,
     description: "Кварцевые часы Casio AE-1500WHX-1A с крупным цифровым дисплеем и оранжевой LED-подсветкой. Второй часовой пояс, секундомер 1/100 с до 24 ч, таймер с автоповтором, 5 будильников. Водонепроницаемость 100 м. Батарея 10 лет. Черный пластиковый корпус и ремешок. Идеальны для повседневной носки.",
-    imageUrl: "/AE-1500WHX-1A_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/AE-1500WHX-1A/AE-1500WHX-1A_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -102,7 +75,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio AE-1500WHX-1A с хронографом и подсветкой в наличии в Калининграде. Водонепроницаемость 100 м, батарея 10 лет. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/AE-1500WHX-1A_2.jpg", alt: "Наручные часы Casio AE-1500WHX-1A в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/AE-1500WHX-1A/AE-1500WHX-1A_2.webp", alt: "Наручные часы Casio AE-1500WHX-1A в магазине Калининграда" }
     ]
   },
   {
@@ -113,7 +86,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 3490,
     description: "Стильные часы Casio LA-680WA-1B из коллекции Vintage в компактном пластиковом корпусе 28,6 мм с металлическим браслетом. Кварцевый механизм, ЖК-дисплей с оранжевой подсветкой, секундомер 1/100 с, будильник, ежечасный сигнал, автоматический календарь. Водонепроницаемость. Универсальный ретро-дизайн для мужчин и женщин.",
-    imageUrl: "/LA-680WA-1B_1.jpg",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/LA-680WA-1B/LA-680WA-1B_1.webp",
     inStock: true,
     gender: "UNISEX",
     stockKaliningrad: 1,
@@ -121,7 +94,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio LA-680WA-1B в ретро-стиле с металлическим браслетом в наличии в Калининграде. Компактный корпус, подсветка. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/LA-680WA-1B_1.jpg_2.jpg", alt: "Наручные часы Casio LA-680WA-1B в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/LA-680WA-1B/LA-680WA-1B_1.jpg_2.webp", alt: "Наручные часы Casio LA-680WA-1B в магазине Калининграда" }
     ]
   },
   {
@@ -132,7 +105,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 1701,
     description: "Классические аналоговые часы Casio MQ-24-1B с черным циферблатом и арабскими метками. Кварцевый механизм, пластиковый корпус и ремешок. Водонепроницаемость 30 м. Легкие и тонкие (20 г, толщина 7,8 мм). Простая и надежная модель для повседневной носки.",
-    imageUrl: "/MQ-24-1B_1.jpg",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/MQ-24-1B/MQ-24-1B_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -140,7 +113,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio MQ-24-1B с аналоговым циферблатом в наличии в Калининграде. Легкие, тонкие, водонепроницаемые. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "MQ-24-1B_2.webp", alt: "Наручные часы Casio MQ-24-1B в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/MQ-24-1B/MQ-24-1B_2.webp", alt: "Наручные часы Casio MQ-24-1B в магазине Калининграда" }
     ]
   },
   {
@@ -151,7 +124,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 1701,
     description: "Аналоговые кварцевые часы Casio MQ-24-1B2 с черным циферблатом и арабскими цифрами. Пластиковый корпус и ремешок. Водонепроницаемость 30 м. Размер корпуса 33,8 мм, толщина 7,8 мм, вес 20 г. Точность хода +/-20 секунд в месяц. Батарея на 2-3 года. Простая и надежная модель для каждого дня.",
-    imageUrl: "/MQ-24-1B2_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/MQ-24-1B2/MQ-24-1B2_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -159,7 +132,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio MQ-24-1B2 с аналоговым циферблатом в наличии в Калининграде. Легкие, точные, водонепроницаемые. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/MQ-24-1B2_2.jpg", alt: "Наручные часы Casio MQ-24-1B2 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/MQ-24-1B2/MQ-24-1B2_2.webp", alt: "Наручные часы Casio MQ-24-1B2 в магазине Калининграда" }
     ]
   },
   {
@@ -170,7 +143,7 @@ export const seoWatches = [
     categorySlug: "quartz",
     price: 1701,
     description: "Лаконичные аналоговые часы Casio MQ-24-1B3 с черным циферблатом и арабскими метками. Кварцевый механизм, пластиковый корпус и ремешок. Водонепроницаемость 30 м. Размер 34,9x38,8 мм, толщина 7,8 мм, вес 20 г. Батарея на 3 года. Винтажный дизайн для повседневной носки.",
-    imageUrl: "/MQ-24-1B3_1.jpg",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/MQ-24-1B3/MQ-24-1B3_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -178,7 +151,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные часы Casio MQ-24-1B3 с винтажным дизайном в наличии в Калининграде. Легкие, точные, водонепроницаемые. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/MQ-24-1B3_2.webp", alt: "Наручные часы Casio MQ-24-1B3 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/MQ-24-1B3/MQ-24-1B3_2.webp", alt: "Наручные часы Casio MQ-24-1B3 в магазине Калининграда" }
     ]
   },
   {
@@ -189,7 +162,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 8990,
     description: "Культовые российские дайверские часы «Амфибия» в корпусе 060 с автоматическим механизмом Восток 2416B (31 камень) и календарем. Водонепроницаемость 200 метров, органическое стекло, подсветка из светосостава переменного действия. Браслет из нержавеющей стали.",
-    imageUrl: "/060142_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/060142/060142_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -197,7 +170,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Амфибия 060142 с автоподзаводом в наличии в Калининграде. Водонепроницаемость 200 м, механизм 2416B. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/060142_2.jpg", alt: "Наручные часы Амфибия 060142 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/060142/060142_2.webp", alt: "Наручные часы Амфибия 060142 в магазине Калининграда" }
     ]
   },
   {
@@ -208,7 +181,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 8990,
     description: "Легендарные российские часы «Амфибия» 100474 с автоматическим механизмом Восток 2415.01 (31 камень). Черный циферблат с надписью «АМФИБИЯ» в позиции 12:00, светящиеся стрелки и метки. Водонепроницаемость 200 м, противоударная конструкция, запас хода 31 час.",
-    imageUrl: "/100474_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/100474/100474_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -216,7 +189,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Амфибия 100474 с автоподзаводом в наличии в Калининграде. Водонепроницаемость 200 м, механизм 2415.01. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/100474_2.webp", alt: "Наручные часы Амфибия 100474 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/100474/100474_2.webp", alt: "Наручные часы Амфибия 100474 в магазине Калининграда" }
     ]
   },
   {
@@ -227,7 +200,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 9290,
     description: "Российские механические часы «Амфибия» 100510 с автоподзаводом и календарем. Корпус из нержавеющей стали, вращающийся безель. Водонепроницаемость 200 метров (20 атм). Размер корпуса 41.5×48.8×15 мм. Надежный механизм с 31 камнем. Идеальны для дайвинга и активного отдыха.",
-    imageUrl: "/100510_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/100510/100510_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -235,7 +208,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Амфибия 100510 с автоподзаводом в наличии в Калининграде. Водонепроницаемость 200 м, стальной корпус. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/100510_2.jpg", alt: "Наручные часы Амфибия 100510 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/100510/100510_2.webp", alt: "Наручные часы Амфибия 100510 в магазине Калининграда" }
     ]
   },
   {
@@ -246,7 +219,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 9490,
     description: "Российские дайверские часы «Амфибия» 120811 с автоматическим механизмом 2415.01 (31 камень). Черный циферблат, корпус из нержавеющей стали (41.7×48.4×15 мм), полиуретановый ремешок шириной 18 мм. Водонепроницаемость 200 метров (20 атм). Масса 81 г. Отличный выбор для подводных погружений.",
-    imageUrl: "/120811_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/120811/120811_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -254,7 +227,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Амфибия 120811 с автоподзаводом в наличии в Калининграде. Водонепроницаемость 200 м, нейлоновый ремешок. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/120811_2.webp", alt: "Наручные часы Амфибия 120811 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/120811/120811_2.webp", alt: "Наручные часы Амфибия 120811 в магазине Калининграда" }
     ]
   },
   {
@@ -265,7 +238,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 9090,
     description: "Современные российские часы «Амфибия» 160559 с автоматическим механизмом Восток 2416Б (31 рубиновый камень). Черный циферблат, корпус из нержавеющей стали (41.6×48.5×15 мм). Календарь мгновенного действия. Водонепроницаемость 200 метров. Запас хода 31 час. Стильный аксессуар для активных мужчин.",
-    imageUrl: "/160559_1.jpg",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/160559/160559_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -284,7 +257,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 8790,
     description: "Российские механические часы «Амфибия» 420289 с автоподзаводом и календарем мгновенного действия. Механизм Восток 2416B (31 камень, частота 19800 полуколебаний/ч, запас хода 31 ч). Корпус из нержавеющей стали (39.6×46×15 мм), браслет из нержавеющей стали с раскладывающейся застежкой. Водонепроницаемость 200 метров.",
-    imageUrl: "/420289_1.png",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/420289/420289_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -292,7 +265,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Амфибия 420289 с автоподзаводом в наличии в Калининграде. Водонепроницаемость 200 м, стальной браслет. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "420289_2.webp", alt: "Наручные часы Амфибия 420289 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/420289/420289_2.webp", alt: "Наручные часы Амфибия 420289 в магазине Калининграда" }
     ]
   },
   {
@@ -303,7 +276,7 @@ export const seoWatches = [
     categorySlug: "automatic",
     price: 10520,
     description: "Элегантные российские часы «Амфибия» 710526 с матовым синим циферблатом и люминесцентными метками. Автоматический механизм Восток 2416B (31 рубиновый камень, запас хода 31 ч). Корпус из нержавеющей стали, вращающийся безель, завинчивающаяся заводная головка. Водонепроницаемость 200 метров. Отличный подарок для ценителей.",
-    imageUrl: "/710526_1.webp",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/710526/710526_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -311,7 +284,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Амфибия 710526 с синим циферблатом в наличии в Калининграде. Водонепроницаемость 200 м, автоподзавод. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/710526_2.jpg", alt: "Наручные часы Амфибия 710526 в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/710526/710526_2.webp", alt: "Наручные часы Амфибия 710526 в магазине Калининграда" }
     ]
   },
   {
@@ -340,8 +313,8 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "automatic",
     price: 11210,
-    description: "Японские механические часы Orient FFN AA 006 B с автоподзаводом. Корпус из нержавеющей стали бочкообразной формы, минеральное стекло, кожаный ремешок с текстильной вставкой. Водонепроницаемость 50 м. Функции: часы, календарь (число и день недели). Светонакопитель на стрелках и индексах. Размер корпуса 35×45×12 мм.[reference:0][reference:1]",
-    imageUrl: "/FFN AA 006 B_1.png",
+    description: "Японские механические часы Orient FFN AA 006 B с автоподзаводом. Корпус из нержавеющей стали бочкообразной формы, минеральное стекло, кожаный ремешок с текстильной вставкой. Водонепроницаемость 50 м. Функции: часы, календарь (число и день недели). Светонакопитель на стрелках и индексах. Размер корпуса 35×45×12 мм.",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/FFN%20AA%20006%20B/FFN%20AA%20006%20B_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -359,8 +332,8 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 14900,
-    description: "Стильные мужские кварцевые часы Orient FTD OV 006 W со светлым циферблатом. Корпус из нержавеющей стали, минеральное стекло, ремешок из натуральной кожи. Водонепроницаемость. Точный японский механизм. Отличный выбор для повседневной носки.[reference:2]",
-    imageUrl: "/FTD OV 006 W_1.png",
+    description: "Стильные мужские кварцевые часы Orient FTD OV 006 W со светлым циферблатом. Корпус из нержавеющей стали, минеральное стекло, ремешок из натуральной кожи. Водонепроницаемость. Точный японский механизм. Отличный выбор для повседневной носки.",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/FTD%20OV%20006%20W/FTD%20OV%20006%20W_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -368,7 +341,7 @@ export const seoWatches = [
     metaDescription: "Оригинальные мужские часы Orient FTD OV 006 W в наличии в Калининграде. Светлый циферблат, кожаный ремешок, кварцевый механизм. Гарантия.",
     model3dUrl: null,
     images: [
-      { url: "/FTD OV 006 W_2.png", alt: "Наручные часы Orient FTD OV 006 W в магазине Калининграда" }
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/FTD%20OV%20006%20W/FTD%20OV%20006%20W_2.webp", alt: "Наручные часы Orient FTD OV 006 W в магазине Калининграда" }
     ]
   },
   {
@@ -378,8 +351,8 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 14790,
-    description: "Спортивные мужские часы Orient FTT 0C 003 B с функцией хронографа. Кварцевый механизм KFB00, корпус из нержавеющей стали диаметром 42 мм, минеральное стекло. Водонепроницаемость 50 м. Черный циферблат с арабскими цифрами и индексами, люминесцентные стрелки и метки. Стальной браслет.[reference:3][reference:4]",
-    imageUrl: "/FTT 0C 003 B_1.png",
+    description: "Спортивные мужские часы Orient FTT 0C 003 B с функцией хронографа. Кварцевый механизм KFB00, корпус из нержавеющей стали диаметром 42 мм, минеральное стекло. Водонепроницаемость 50 м. Черный циферблат с арабскими цифрами и индексами, люминесцентные стрелки и метки. Стальной браслет.",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/FTT%200C%20003%20B/FTT%200C%20003%20B_1.webp",
     inStock: true,
     gender: "MALE",
     stockKaliningrad: 1,
@@ -397,7 +370,7 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 13500,
-    description: "Элегантные мужские кварцевые часы Orient FTT 0N 002 W со светлым циферблатом. Корпус из нержавеющей стали диаметром 42 мм, минеральное стекло, ремешок из натуральной кожи. Водонепроницаемость 50 м (5 Бар). Функции: отображение даты, секундомер. Отличный выбор для повседневного образа.[reference:5][reference:6]",
+    description: "Элегантные мужские кварцевые часы Orient FTT 0N 002 W со светлым циферблатом. Корпус из нержавеющей стали диаметром 42 мм, минеральное стекло, ремешок из натуральной кожи. Водонепроницаемость 50 м (5 Бар). Функции: отображение даты, секундомер. Отличный выбор для повседневного образа.",
     imageUrl: null,
     inStock: true,
     gender: "MALE",
@@ -416,7 +389,7 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 18460,
-    description: "Изысканные женские кварцевые часы Orient FTW 00 003 W. Корпус из нержавеющей стали с PVD-покрытием, сапфировое стекло, стальной браслет с позолотой. Водонепроницаемость 30 м. Белый циферблат с арабскими цифрами, инкрустация кристаллами Swarovski. Функции: часы, календарь, хронограф. Размер корпуса 37×37×9 мм.[reference:7][reference:8]",
+    description: "Изысканные женские кварцевые часы Orient FTW 00 003 W. Корпус из нержавеющей стали с PVD-покрытием, сапфировое стекло, стальной браслет с позолотой. Водонепроницаемость 30 м. Белый циферблат с арабскими цифрами, инкрустация кристаллами Swarovski. Функции: часы, календарь, хронограф. Размер корпуса 37×37×9 мм.",
     imageUrl: null,
     inStock: true,
     gender: "FEMALE",
@@ -435,7 +408,7 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 16500,
-    description: "Спортивные мужские кварцевые часы Orient FTW 01 006 B с хронографом. Корпус из нержавеющей стали диаметром 43-45.8 мм, минеральное стекло с антибликовым покрытием, черный каучуковый ремешок. Водонепроницаемость 50 м. Черный циферблат, противоударная конструкция, люминесцентное покрытие стрелок и индексов. Функции: дата, день недели, месяц, 24-часовой циферблат, хронограф.[reference:9][reference:10]",
+    description: "Спортивные мужские кварцевые часы Orient FTW 01 006 B с хронографом. Корпус из нержавеющей стали диаметром 43-45.8 мм, минеральное стекло с антибликовым покрытием, черный каучуковый ремешок. Водонепроницаемость 50 м. Черный циферблат, противоударная конструкция, люминесцентное покрытие стрелок и индексов. Функции: дата, день недели, месяц, 24-часовой циферблат, хронограф.",
     imageUrl: null,
     inStock: true,
     gender: "MALE",
@@ -454,7 +427,7 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 12900,
-    description: "Стильные мужские кварцевые часы Orient FUA AN 001 W0 со светлым циферблатом. Корпус из нержавеющей стали, минеральное стекло, кожаный ремешок шириной 16 мм. Водонепроницаемость. Точный японский механизм. Отличный выбор для повседневной носки.[reference:11]",
+    description: "Стильные мужские кварцевые часы Orient FUA AN 001 W0 со светлым циферблатом. Корпус из нержавеющей стали, минеральное стекло, кожаный ремешок шириной 16 мм. Водонепроницаемость. Точный японский механизм. Отличный выбор для повседневной носки.",
     imageUrl: null,
     inStock: true,
     gender: "MALE",
@@ -473,7 +446,7 @@ export const seoWatches = [
     brandName: "Orient",
     categorySlug: "quartz",
     price: 13900,
-    description: "Элегантные женские кварцевые часы Orient FUA AN 003 B. Корпус из нержавеющей стали диаметром 28 мм, сапфировое стекло, устойчивое к царапинам, ремешок из натуральной кожи. Водонепроницаемость 30 м. Точность хода -10/+15 секунд в месяц. Черный циферблат со стрелками. Идеальный аксессуар для повседневной носки.[reference:12][reference:13]",
+    description: "Элегантные женские кварцевые часы Orient FUA AN 003 B. Корпус из нержавеющей стали диаметром 28 мм, сапфировое стекло, устойчивое к царапинам, ремешок из натуральной кожи. Водонепроницаемость 30 м. Точность хода -10/+15 секунд в месяц. Черный циферблат со стрелками. Идеальный аксессуар для повседневной носки.",
     imageUrl: null,
     inStock: true,
     gender: "FEMALE",
@@ -486,99 +459,99 @@ export const seoWatches = [
     ]
   },
   {
-    "modelCode": "SEL03002MO",
-    "title": "Мужские механические часы Orient M-Force SEL03002MO с автоподзаводом",
-    "slug": "orient-m-force-sel03002mo",
-    "brandName": "Orient",
-    "categorySlug": "automatic",
-    "price": 43250,
-    "description": "Японские дайверские часы Orient M-Force SEL03002MO с автоматическим механизмом 40N5A (22 камня, запас хода 40 часов, ручной подзавод и остановка секунды). Оранжевый циферблат, стальной корпус диаметром 44 мм, сапфировое стекло, водонепроницаемость 200 м. Индикатор запаса хода, дата, завинчивающаяся головка.",
-    "imageUrl": "/SEL03002MO_1.jpg",
-    "inStock": true,
-    "gender": "MALE",
-    "stockKaliningrad": 1,
-    "metaTitle": "Часы Orient M-Force SEL03002MO купить в Калининграде — цена, фото",
-    "metaDescription": "Оригинальные японские часы Orient M-Force SEL03002MO с автоподзаводом в наличии в Калининграде. Дайверские, сапфировое стекло, индикатор запаса хода. Гарантия.",
-    "model3dUrl": null,
-    "images": [
-      { "url": "/SEL03002MO_2.jpg", "alt": "Наручные часы Orient M-Force SEL03002MO в магазине Калининграда" }
+    modelCode: "SEL03002MO",
+    title: "Мужские механические часы Orient M-Force SEL03002MO с автоподзаводом",
+    slug: "orient-m-force-sel03002mo",
+    brandName: "Orient",
+    categorySlug: "automatic",
+    price: 43250,
+    description: "Японские дайверские часы Orient M-Force SEL03002MO с автоматическим механизмом 40N5A (22 камня, запас хода 40 часов, ручной подзавод и остановка секунды). Оранжевый циферблат, стальной корпус диаметром 44 мм, сапфировое стекло, водонепроницаемость 200 м. Индикатор запаса хода, дата, завинчивающаяся головка.",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/SEL03002MO/SEL03002MO_1.webp",
+    inStock: true,
+    gender: "MALE",
+    stockKaliningrad: 1,
+    metaTitle: "Часы Orient M-Force SEL03002MO купить в Калининграде — цена, фото",
+    metaDescription: "Оригинальные японские часы Orient M-Force SEL03002MO с автоподзаводом в наличии в Калининграде. Дайверские, сапфировое стекло, индикатор запаса хода. Гарантия.",
+    model3dUrl: null,
+    images: [
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/SEL03002MO/SEL03002MO_2.webp", alt: "Наручные часы Orient M-Force SEL03002MO в магазине Калининграда" }
     ]
   },
   {
-    "modelCode": "SEL02003WO",
-    "title": "Мужские механические часы Orient Pro Saturation SEL02003WO",
-    "slug": "orient-pro-saturation-sel02003wo",
-    "brandName": "Orient",
-    "categorySlug": "automatic",
-    "price": 103730,
-    "description": "Профессиональные дайверские часы Orient Pro Saturation SEL02003WO с автоматическим механизмом (22 камня, запас хода 40 часов). Белый циферблат, стальной корпус, сапфировое стекло, водонепроницаемость 300 м. Завинчивающаяся головка, индикатор запаса хода, каучуковый ремешок. Модель для серьезных погружений.",
-    "imageUrl": "/SEL02003WO_1.jpg",
-    "inStock": true,
-    "gender": "MALE",
-    "stockKaliningrad": 1,
-    "metaTitle": "Часы Orient Pro Saturation SEL02003WO купить в Калининграде",
-    "metaDescription": "Оригинальные часы Orient Pro Saturation SEL02003WO с автоподзаводом в наличии. Профессиональный дайвер, водонепроницаемость 300 м. Гарантия.",
-    "model3dUrl": null,
-    "images": [
-      { "url": "/SEL02003WO_2.webp", "alt": "Наручные часы Orient Pro Saturation SEL02003WO в магазине Калининграда" }
+    modelCode: "SEL02003WO",
+    title: "Мужские механические часы Orient Pro Saturation SEL02003WO",
+    slug: "orient-pro-saturation-sel02003wo",
+    brandName: "Orient",
+    categorySlug: "automatic",
+    price: 103730,
+    description: "Профессиональные дайверские часы Orient Pro Saturation SEL02003WO с автоматическим механизмом (22 камня, запас хода 40 часов). Белый циферблат, стальной корпус, сапфировое стекло, водонепроницаемость 300 м. Завинчивающаяся головка, индикатор запаса хода, каучуковый ремешок. Модель для серьезных погружений.",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/SEL02003WO/SEL02003WO_1.webp",
+    inStock: true,
+    gender: "MALE",
+    stockKaliningrad: 1,
+    metaTitle: "Часы Orient Pro Saturation SEL02003WO купить в Калининграде",
+    metaDescription: "Оригинальные часы Orient Pro Saturation SEL02003WO с автоподзаводом в наличии. Профессиональный дайвер, водонепроницаемость 300 м. Гарантия.",
+    model3dUrl: null,
+    images: [
+      { url: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/SEL02003WO/SEL02003WO_2.webp", alt: "Наручные часы Orient Pro Saturation SEL02003WO в магазине Калининграда" }
     ]
   },
   {
-    "modelCode": "340766",
-    "title": "Мужские механические часы Командирские 340766 К-34 с автоподзаводом",
-    "slug": "komandirskie-340766-k-34",
-    "brandName": "Командирские",
-    "categorySlug": "automatic",
-    "price": 13530,
-    "description": "Российские механические часы Командирские 340766 К-34 с автоподзаводом (механизм Восток, 31 камень, запас хода 31 час). Корпус из нержавеющей стали, белый циферблат с арабскими цифрами, противоударные, водонепроницаемость 100 м. Кожаный ремешок. Классический дизайн для повседневной носки.",
-    "imageUrl": "/340766_1.jpg",
-    "inStock": true,
-    "gender": "MALE",
-    "stockKaliningrad": 1,
-    "metaTitle": "Часы Командирские 340766 К-34 купить в Калининграде — цена",
-    "metaDescription": "Оригинальные мужские часы Командирские 340766 К-34 с автоподзаводом в наличии. Российское производство, водонепроницаемость 100 м. Гарантия.",
-    "model3dUrl": null,
-    "images": [
-      { "url": null, "alt": "Наручные часы Командирские 340766 К-34 в магазине Калининграда" }
+    modelCode: "340766",
+    title: "Мужские механические часы Командирские 340766 К-34 с автоподзаводом",
+    slug: "komandirskie-340766-k-34",
+    brandName: "Командирские",
+    categorySlug: "automatic",
+    price: 13530,
+    description: "Российские механические часы Командирские 340766 К-34 с автоподзаводом (механизм Восток, 31 камень, запас хода 31 час). Корпус из нержавеющей стали, белый циферблат с арабскими цифрами, противоударные, водонепроницаемость 100 м. Кожаный ремешок. Классический дизайн для повседневной носки.",
+    imageUrl: "https://bwmersrrozbdhvcorgah.supabase.co/storage/v1/object/public/watch-39-bucket/340766/340766_1.webp",
+    inStock: true,
+    gender: "MALE",
+    stockKaliningrad: 1,
+    metaTitle: "Часы Командирские 340766 К-34 купить в Калининграде — цена",
+    metaDescription: "Оригинальные мужские часы Командирские 340766 К-34 с автоподзаводом в наличии. Российское производство, водонепроницаемость 100 м. Гарантия.",
+    model3dUrl: null,
+    images: [
+      { url: null, alt: "Наручные часы Командирские 340766 К-34 в магазине Калининграда" }
     ]
   },
   {
-    "modelCode": "NH35/1825899",
-    "title": "Мужские механические часы Штурманские Океан Стингрей NH35/1825899",
-    "slug": "shturmanskie-okean-stingray-nh35-1825899",
-    "brandName": "Штурманские",
-    "categorySlug": "automatic",
-    "price": 79500,
-    "description": "Российские дайверские часы Штурманские Океан Стингрей NH35/1825899 с японским автоматическим механизмом Seiko NH35 (запас хода 41 час). Корпус из стали, безель с лаковым покрытием, водонепроницаемость 300 м. Комплектуется кожаным и каучуковым ремешком. Уникальный брутальный дизайн.",
-    "imageUrl": "/NH35_1825899_1.webp",
-    "inStock": true,
-    "gender": "MALE",
-    "stockKaliningrad": 1,
-    "metaTitle": "Часы Штурманские Океан Стингрей NH35/1825899 купить в Калининграде",
-    "metaDescription": "Оригинальные мужские часы Штурманские Океан Стингрей NH35/1825899 с автоподзаводом в наличии. Водонепроницаемость 300 м, механизм Seiko. Гарантия.",
-    "model3dUrl": null,
-    "images": [
-      { "url": "/NH35_1825899_2.jpeg", "alt": "Наручные часы Штурманские Океан Стингрей NH35/1825899 в магазине Калининграда" }
+    modelCode: "NH35/1825899",
+    title: "Мужские механические часы Штурманские Океан Стингрей NH35/1825899",
+    slug: "shturmanskie-okean-stingray-nh35-1825899",
+    brandName: "Штурманские",
+    categorySlug: "automatic",
+    price: 79500,
+    description: "Российские дайверские часы Штурманские Океан Стингрей NH35/1825899 с японским автоматическим механизмом Seiko NH35 (запас хода 41 час). Корпус из стали, безель с лаковым покрытием, водонепроницаемость 300 м. Комплектуется кожаным и каучуковым ремешком. Уникальный брутальный дизайн.",
+    imageUrl: "/NH35_1825899_1.webp",
+    inStock: true,
+    gender: "MALE",
+    stockKaliningrad: 1,
+    metaTitle: "Часы Штурманские Океан Стингрей NH35/1825899 купить в Калининграде",
+    metaDescription: "Оригинальные мужские часы Штурманские Океан Стингрей NH35/1825899 с автоподзаводом в наличии. Водонепроницаемость 300 м, механизм Seiko. Гарантия.",
+    model3dUrl: null,
+    images: [
+      { url: "/NH35_1825899_2.jpeg", alt: "Наручные часы Штурманские Океан Стингрей NH35/1825899 в магазине Калининграда" }
     ]
   },
   {
-    "modelCode": "2432/4571795",
-    "title": "Мужские механические часы Штурманские Спутник 2432/4571795",
-    "slug": "shturmanskie-sputnik-2432-4571795",
-    "brandName": "Штурманские",
-    "categorySlug": "automatic",
-    "price": 45500,
-    "description": "Российские механические часы Штурманские 2432/4571795 с автоподзаводом (калибр Восток 2432, запас хода 31 час). Корпус из стали (44 мм), минеральное стекло, водонепроницаемость 50 м. Черный с синим циферблат, 24-часовая шкала, дата, люминесцентные стрелки. Кожаный ремешок.",
-    "imageUrl": "/2432_4571795_1.jpg",
-    "inStock": true,
-    "gender": "MALE",
-    "stockKaliningrad": 1,
-    "metaTitle": "Часы Штурманские Спутник 2432/4571795 купить в Калининграде",
-    "metaDescription": "Оригинальные мужские часы Штурманские 2432/4571795 с автоподзаводом в наличии. Российское производство, 24-часовая шкала, кожаный ремешок. Гарантия.",
-    "model3dUrl": null,
-    "images": [
-      { "url": "/2432_4571795_2.webp", "alt": "Наручные часы Штурманские 2432/4571795 в магазине Калининграда" },
-      { "url": "/2432_4571795_3.jpg", "alt": "Наручные часы Штурманские 2432/4571795 в магазине Калининграда, на футбольном мяче" }
+    modelCode: "2432/4571795",
+    title: "Мужские механические часы Штурманские Спутник 2432/4571795",
+    slug: "shturmanskie-sputnik-2432-4571795",
+    brandName: "Штурманские",
+    categorySlug: "automatic",
+    price: 45500,
+    description: "Российские механические часы Штурманские 2432/4571795 с автоподзаводом (калибр Восток 2432, запас хода 31 час). Корпус из стали (44 мм), минеральное стекло, водонепроницаемость 50 м. Черный с синим циферблат, 24-часовая шкала, дата, люминесцентные стрелки. Кожаный ремешок.",
+    imageUrl: "/2432_4571795_1.jpg",
+    inStock: true,
+    gender: "MALE",
+    stockKaliningrad: 1,
+    metaTitle: "Часы Штурманские Спутник 2432/4571795 купить в Калининграде",
+    metaDescription: "Оригинальные мужские часы Штурманские 2432/4571795 с автоподзаводом в наличии. Российское производство, 24-часовая шкала, кожаный ремешок. Гарантия.",
+    model3dUrl: null,
+    images: [
+      { url: "/2432_4571795_2.webp", alt: "Наручные часы Штурманские 2432/4571795 в магазине Калининграда" },
+      { url: "/2432_4571795_3.jpg", alt: "Наручные часы Штурманские 2432/4571795 в магазине Калининграда, на футбольном мяче" }
     ]
   }
 ];
