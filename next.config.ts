@@ -32,6 +32,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'avatars.mds.yandex.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'bwmersrrozbdhvcorgah.supabase.co',
+        pathname: '/storage/v1/object/public/watch-39-bucket/**',
       }
     ],
   },
