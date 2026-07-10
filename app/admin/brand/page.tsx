@@ -2,11 +2,13 @@
 'use client';
 
 import { Suspense } from 'react';
-import { BrandList } from '../resources/brand'; // Поправьте импорт в зависимости от расположения
+import { BrandList } from '../resources/brand';
 
 export default function BrandListPage() {
-  <Suspense fallback={<div>Загрузка...</div>}>
-    return <BrandList />;
-  </Suspense>
-  
+  // Слово return должно стоять здесь, оборачивая весь JSX в круглые скобки!
+  return (
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <BrandList />
+    </Suspense>
+  );
 }
