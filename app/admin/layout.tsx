@@ -1,6 +1,8 @@
 // app/admin/layout.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { Refine } from '@refinedev/core';
 import type { AuthProvider } from '@refinedev/core'; // ← 1. Импортируем тип AuthProvider
 import { dataProvider, liveProvider } from '@refinedev/supabase';

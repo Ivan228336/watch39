@@ -1,6 +1,8 @@
 // app/admin/category/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { List, useTable, EditButton } from "@refinedev/antd";
 import { Table, Space } from "antd";
 

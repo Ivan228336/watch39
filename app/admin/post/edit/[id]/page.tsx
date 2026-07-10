@@ -1,6 +1,8 @@
 // app/admin/post/edit/[id]/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { Edit, useForm } from "@refinedev/antd";
 import { Form, Input, Switch } from "antd";
 

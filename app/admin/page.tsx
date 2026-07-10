@@ -1,6 +1,8 @@
 // app/admin/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { Card, Row, Col, Typography } from "antd";
 import { useNavigation } from "@refinedev/core";
 import {

@@ -1,6 +1,8 @@
 // app/admin/resources/brand.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { List, useTable } from '@refinedev/antd';
 import { Table } from 'antd';
 

@@ -1,6 +1,8 @@
 // app/admin/post/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { List, useTable, EditButton, DateField, BooleanField } from "@refinedev/antd";
 import { Table, Space } from "antd";
 

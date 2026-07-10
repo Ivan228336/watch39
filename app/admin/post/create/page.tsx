@@ -1,6 +1,8 @@
 // app/admin/post/create/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { Create, useForm } from "@refinedev/antd";
 import { Form, Input, Switch } from "antd";
 

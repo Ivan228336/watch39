@@ -1,6 +1,8 @@
 // app/admin/watch/edit/[id]/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { Edit, useForm, useSelect } from "@refinedev/antd";
 import { Form, Input, InputNumber, Switch, Select } from "antd";
 

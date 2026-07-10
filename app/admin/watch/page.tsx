@@ -1,6 +1,8 @@
 // app/admin/watch/page.tsx
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { List, useTable, EditButton, BooleanField } from "@refinedev/antd";
 import { Table, Space } from "antd";
 
