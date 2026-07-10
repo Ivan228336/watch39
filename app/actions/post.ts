@@ -21,7 +21,9 @@ export async function savePostAction(id: number | null, formData: FormData) {
   } else {
     await prisma.post.create({ data });
   }
-
+  revalidatePath("/");
   revalidatePath("/admin/post");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${data.slug}`, 'page');
   redirect("/admin/post");
 }

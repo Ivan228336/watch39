@@ -1,9 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Input, InputNumber, Select, Button, Switch } from "antd";
+import { Input, InputNumber, Select, Button, Switch, Popconfirm, message } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { deleteImageAction, deleteWatchAction, deleteMainImageAction } from "@/app/actions/watch";
 
 export function WatchForm({ initialData, brands, categories, action }: any) {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     brandId: initialData?.brandId || '',
     categoryId: initialData?.categoryId || '',
@@ -11,9 +14,39 @@ export function WatchForm({ initialData, brands, categories, action }: any) {
     inStock: initialData?.inStock ?? true,
   });
 
+  const handleDeleteImage = async (imageId: string) => {
+    try {
+      setLoading(true);
+      await deleteImageAction(imageId);
+      message.success("Фото удалено");
+    } catch (error) {
+      message.error("Ошибка при удалении");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteMainImage = async () => {
+    try {
+      setLoading(true);
+      await deleteMainImageAction(initialData.id);
+      message.success("Главное фото удалено");
+    } catch (e) { message.error("Ошибка"); } finally { setLoading(false); }
+  };
+
+  const handleDeleteWatch = async () => {
+    try {
+      setLoading(true);
+      await deleteWatchAction(initialData.id);
+    } catch (error) {
+      message.error("Ошибка при удалении");
+      setLoading(false);
+    }
+  };
+
   return (
+    // Убрали encType="multipart/form-data", так как React делает это автоматически
     <form action={action}>
-      {/* Скрытые поля для передачи состояния сложных компонентов */}
       <input type="hidden" name="brandId" value={formData.brandId} />
       <input type="hidden" name="categoryId" value={formData.categoryId} />
       <input type="hidden" name="gender" value={formData.gender} />
@@ -24,6 +57,46 @@ export function WatchForm({ initialData, brands, categories, action }: any) {
         <Input name="modelCode" defaultValue={initialData?.modelCode} placeholder="Код модели" required />
         <Input name="slug" defaultValue={initialData?.slug} placeholder="URL (Slug)" required />
         
+        {/* --- БЛОК ОТОБРАЖЕНИЯ ФОТО (ГЛАВНОЕ + ГАЛЕРЕЯ) --- */}
+        <div className="flex flex-col gap-6 mb-4">
+          
+          {/* Главное фото */}
+          {initialData?.imageUrl && (
+            <div>
+              <p className="font-bold mb-2">Главное фото:</p>
+              <div className="relative w-32 h-32 border rounded overflow-hidden">
+                <img src={initialData.imageUrl} alt="Main" className="w-full h-full object-cover" />
+                {/* Кнопка всегда видна */}
+                <div className="absolute bottom-0 left-0 w-full p-1 bg-black/60">
+                  <Popconfirm title="Удалить главное фото?" onConfirm={handleDeleteMainImage}>
+                    <Button danger icon={<DeleteOutlined />} size="small" block loading={loading} />
+                  </Popconfirm>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Галерея */}
+          {initialData?.images && initialData.images.length > 0 && (
+            <div>
+              <p className="font-bold mb-2">Галерея:</p>
+              <div className="flex gap-4 flex-wrap">
+                {initialData.images.map((img: any) => (
+                  <div key={img.id} className="relative w-24 h-24 border rounded overflow-hidden">
+                    <img src={img.url} alt="Gallery" className="w-full h-full object-cover" />
+                    {/* Кнопка всегда видна */}
+                    <div className="absolute bottom-0 left-0 w-full p-1 bg-black/60">
+                      <Popconfirm title="Удалить?" onConfirm={() => handleDeleteImage(img.id)}>
+                        <Button danger icon={<DeleteOutlined />} size="small" block loading={loading} />
+                      </Popconfirm>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         <Select 
           value={formData.brandId} 
           placeholder="Выберите бренд" 
@@ -55,7 +128,7 @@ export function WatchForm({ initialData, brands, categories, action }: any) {
         </Select>
 
         <Input.TextArea name="description" defaultValue={initialData?.description} placeholder="Описание" rows={4} />
-        <Input name="imageUrl" defaultValue={initialData?.imageUrl} placeholder="URL картинки" />
+        <Input name="imageUrl" defaultValue={initialData?.imageUrl} placeholder="URL главной картинки" />
         <Input name="model3dUrl" defaultValue={initialData?.model3dUrl} placeholder="URL 3D модели" />
         
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
@@ -71,7 +144,32 @@ export function WatchForm({ initialData, brands, categories, action }: any) {
         <Input name="metaDescription" defaultValue={initialData?.metaDescription} placeholder="SEO Description" />
         <Input name="h1" defaultValue={initialData?.h1} placeholder="H1 заголовок" />
 
-        <Button type="primary" htmlType="submit">Сохранить</Button>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="mainImageFile" className="font-bold">Заменить главное фото</label>
+          <input type="file" id="mainImageFile" name="mainImageFile" accept="image/*" />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="galleryFiles" className="font-bold">Добавить новые в галерею</label>
+          <input type="file" id="galleryFiles" name="galleryFiles" accept="image/*" multiple />
+        </div>
+
+        <div className="flex justify-between items-center mt-8 pt-4 border-t">
+          <Button type="primary" htmlType="submit" loading={loading}>Сохранить изменения</Button>
+          
+          {initialData?.id && (
+            <Popconfirm
+              title="Удалить товар полностью?"
+              description="Это действие нельзя отменить."
+              onConfirm={handleDeleteWatch}
+              okText="Удалить"
+              okButtonProps={{ danger: true }}
+              cancelText="Отмена"
+            >
+              <Button danger icon={<DeleteOutlined />} loading={loading}>Удалить товар</Button>
+            </Popconfirm>
+          )}
+        </div>
       </div>
     </form>
   );

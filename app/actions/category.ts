@@ -19,5 +19,8 @@ export async function saveCategoryAction(id: string | null, formData: FormData) 
   }
 
   revalidatePath("/admin/category");
+  revalidatePath("/category"); 
+  revalidatePath(`/category/${data.slug}`, 'page');
+  revalidatePath("/");
   redirect("/admin/category");
 }

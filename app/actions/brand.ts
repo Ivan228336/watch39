@@ -30,5 +30,8 @@ export async function updateBrandAction(id: string, formData: FormData) {
   });
 
   revalidatePath("/admin/brand");
+  revalidatePath("/brands"); // ваш публичный список
+  revalidatePath(`/brand/${slug}`, 'page');
+  revalidatePath("/");
   redirect("/admin/brand");
 }

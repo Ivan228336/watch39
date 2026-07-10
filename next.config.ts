@@ -36,9 +36,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'bwmersrrozbdhvcorgah.supabase.co',
-        pathname: '/storage/v1/object/public/watch-39-bucket/**',
+        pathname: '/storage/v1/object/public/**',
       }
     ],
+    unoptimized: true,
   },
 };
 

@@ -5,7 +5,12 @@ import { WatchForm } from "@/components/WatchForm"; // Вынесем форму
 export default async function EditWatchPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   
-  const watch = await prisma.watch.findUnique({ where: { id } });
+  const watch = await prisma.watch.findUnique({
+    where: { id },
+    include: { 
+        images: true
+    }
+    });
   const brands = await prisma.brand.findMany();
   const categories = await prisma.category.findMany();
 
