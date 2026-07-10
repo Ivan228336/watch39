@@ -56,29 +56,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             }}
             resources={[
               { 
-                name: 'brand', 
-                meta: { tableName: 'Brand' },
+                name: 'Brand', // 👈 Меняем имя ресурса на точное имя таблицы с большой буквы
                 list: '/admin/brand',
                 create: '/admin/brand/create',
                 edit: '/admin/brand/edit/:id',
               },
               { 
-                name: 'category', 
-                meta: { tableName: 'Category' },
+                name: 'Category', // 👈 С большой буквы
                 list: '/admin/category',
                 create: '/admin/category/create',
                 edit: '/admin/category/edit/:id',
               },
               { 
-                name: 'watch', 
-                meta: { tableName: 'Watch' },
+                name: 'Watch', // 👈 С большой буквы
                 list: '/admin/watch',
                 create: '/admin/watch/create',
                 edit: '/admin/watch/edit/:id',
               },
               { 
-                name: 'post', 
-                meta: { tableName: 'Post' },
+                name: 'Post', // 👈 С большой буквы
                 list: '/admin/post',
                 create: '/admin/post/create',
                 edit: '/admin/post/edit/:id',
