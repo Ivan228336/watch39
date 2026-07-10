@@ -1,44 +1,29 @@
-'use client';
+import { prisma } from "@/lib/prisma";
+import { PostTable } from "@/components/PostTable";
+import { Button } from "antd";
+import Link from "next/link";
 
-import { Suspense } from 'react';
-import { List, useTable, EditButton, DateField, BooleanField } from "@refinedev/antd";
-import { Table, Space } from "antd";
+export default async function PostListPage() {
+  const posts = await prisma.post.findMany({ orderBy: { createdAt: 'desc' } });
 
-function PostListContent() {
-  const { tableProps } = useTable();
+  // Важно: Prisma возвращает Date объекты, которые не всегда корректно сериализуются.
+  // Преобразуем их в строки перед передачей в клиентский компонент.
+  const serializablePosts = posts.map(post => ({
+    ...post,
+    createdAt: post.createdAt.toISOString(),
+    updatedAt: post.updatedAt.toISOString(),
+  }));
 
   return (
-    <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="title" title="Заголовок" />
-        <Table.Column dataIndex="slug" title="Slug" />
-        <Table.Column 
-          dataIndex="published" 
-          title="Опубликовано" 
-          render={(value) => <BooleanField value={value} />}
-        />
-        <Table.Column 
-          dataIndex="createdAt" 
-          title="Дата создания" 
-          render={(value) => <DateField value={value} format="DD.MM.YYYY" />}
-        />
-        <Table.Column 
-          title="Действия" 
-          render={(_, record: any) => (
-            <Space>
-              <EditButton hideText size="small" recordItemId={record.id} />
-            </Space>
-          )} 
-        />
-      </Table>
-    </List>
-  );
-}
+    <div style={{ padding: 24 }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
+        <h1>Посты</h1>
+        <Link href="/admin/post/create">
+          <Button type="primary">Создать пост</Button>
+        </Link>
+      </div>
 
-export default function PostListPage() {
-  return (
-    <Suspense fallback={<div>Загрузка списка...</div>}>
-      <PostListContent />
-    </Suspense>
+      <PostTable data={serializablePosts} />
+    </div>
   );
 }

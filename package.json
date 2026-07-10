@@ -12,11 +12,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
-    "@refinedev/antd": "^6.0.3",
-    "@refinedev/core": "^5.0.12",
     "@refinedev/inferencer": "^7.0.0",
-    "@refinedev/nextjs-router": "^7.0.5",
-    "@refinedev/supabase": "^6.0.2",
     "@supabase/supabase-js": "^2.110.2",
     "@vercel/analytics": "^2.0.1",
     "antd": "^5.29.3",

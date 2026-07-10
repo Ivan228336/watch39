@@ -1,34 +1,22 @@
-'use client';
+import { prisma } from "@/lib/prisma";
+import { CategoryTable } from "@/components/CategoryTable"; // Импортируем наш новый компонент
+import { Button } from "antd";
+import Link from "next/link";
 
-import { Suspense } from 'react';
-import { List, useTable, EditButton } from "@refinedev/antd";
-import { Table, Space } from "antd";
-
-function CategoryListContent() {
-  const { tableProps } = useTable();
+export default async function CategoryListPage() {
+  const categories = await prisma.category.findMany();
 
   return (
-    <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="name" title="Название" />
-        <Table.Column dataIndex="slug" title="URL (Slug)" />
-        <Table.Column 
-          title="Действия" 
-          render={(_, record: any) => (
-            <Space>
-              <EditButton hideText size="small" recordItemId={record.id} />
-            </Space>
-          )} 
-        />
-      </Table>
-    </List>
-  );
-}
+    <div style={{ padding: 24 }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
+        <h1>Категории</h1>
+        <Link href="/admin/category/create">
+          <Button type="primary">Создать категорию</Button>
+        </Link>
+      </div>
 
-export default function CategoryListPage() {
-  return (
-    <Suspense fallback={<div>Загрузка списка...</div>}>
-      <CategoryListContent />
-    </Suspense>
+      {/* Передаем данные как обычный массив объектов, это безопасно */}
+      <CategoryTable data={categories} />
+    </div>
   );
 }

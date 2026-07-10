@@ -1,36 +1,19 @@
-'use client';
+import { prisma } from "@/lib/prisma";
+import { CategoryForm } from "@/components/CategoryForm";
+import { saveCategoryAction } from "@/app/actions/category";
 
-import { Suspense } from 'react';
-import { Edit, useForm } from "@refinedev/antd";
-import { Form, Input } from "antd";
+export default async function EditCategoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const category = await prisma.category.findUnique({ where: { id } });
 
-function CategoryEditForm() {
-  const { formProps, saveButtonProps } = useForm({});
+  if (!category) return <div>Категория не найдена</div>;
+
+  const updateAction = saveCategoryAction.bind(null, category.id);
 
   return (
-    <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
-        <Form.Item label="Название" name="name" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="URL (Slug)" name="slug" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="SEO Title" name="metaTitle">
-          <Input />
-        </Form.Item>
-        <Form.Item label="SEO Description" name="metaDescription">
-          <Input.TextArea rows={3} />
-        </Form.Item>
-      </Form>
-    </Edit>
-  );
-}
-
-export default function CategoryEditPage() {
-  return (
-    <Suspense fallback={<div>Загрузка данных...</div>}>
-      <CategoryEditForm />
-    </Suspense>
+    <div style={{ padding: 24, maxWidth: 600 }}>
+      <h1>Редактирование: {category.name}</h1>
+      <CategoryForm initialData={category} action={updateAction} />
+    </div>
   );
 }

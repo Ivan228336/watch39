@@ -1,44 +1,23 @@
-'use client';
+import { Button } from "antd";
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
+import { WatchTable } from "./components/WatchTable"; // Импортируем наш клиентский компонент
 
-import { Suspense } from 'react';
-import { List, useTable, EditButton, BooleanField } from "@refinedev/antd";
-import { Table, Space } from "antd";
-
-// 1. Внутренний компонент таблицы
-function WatchListContent() {
-  const { tableProps } = useTable({
-    resource: "watch",
+export default async function WatchListPage() {
+  // Получаем данные на сервере
+  const watches = await prisma.watch.findMany({
+    orderBy: { price: 'desc' }
   });
 
   return (
-    <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="modelCode" title="Код модели" />
-        <Table.Column dataIndex="title" title="Название" />
-        <Table.Column dataIndex="price" title="Цена (₽)" />
-        <Table.Column 
-          dataIndex="inStock" 
-          title="В наличии" 
-          render={(value) => <BooleanField value={value} />}
-        />
-        <Table.Column 
-          title="Действия" 
-          render={(_, record: any) => (
-            <Space>
-              <EditButton hideText size="small" recordItemId={record.id} />
-            </Space>
-          )} 
-        />
-      </Table>
-    </List>
-  );
-}
-
-// 2. Главная страница списка
-export default function WatchListPage() {
-  return (
-    <Suspense fallback={<div>Загрузка списка часов...</div>}>
-      <WatchListContent />
-    </Suspense>
+    <div style={{ padding: 24 }}>
+      <h1>Часы</h1>
+      <Link href="/admin/watch/create">
+        <Button type="primary" style={{ marginBottom: 16 }}>Создать</Button>
+      </Link>
+      
+      {/* Передаем данные в клиентский компонент */}
+      <WatchTable data={watches} />
+    </div>
   );
 }
