@@ -1,40 +1,44 @@
-// app/admin/post/page.tsx
 'use client';
 
 import { Suspense } from 'react';
 import { List, useTable, EditButton, DateField, BooleanField } from "@refinedev/antd";
 import { Table, Space } from "antd";
 
-export default function PostListPage() {
+function PostListContent() {
   const { tableProps } = useTable();
 
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
-        <List>
-        <Table {...tableProps} rowKey="id">
-            <Table.Column dataIndex="title" title="Заголовок" />
-            <Table.Column dataIndex="slug" title="Slug" />
-            <Table.Column 
-            dataIndex="published" 
-            title="Опубликовано" 
-            render={(value) => <BooleanField value={value} />}
-            />
-            <Table.Column 
-            dataIndex="createdAt" 
-            title="Дата создания" 
-            render={(value) => <DateField value={value} format="DD.MM.YYYY" />}
-            />
-            <Table.Column 
-            title="Действия" 
-            render={(_, record: any) => (
-                <Space>
-                <EditButton hideText size="small" recordItemId={record.id} />
-                </Space>
-            )} 
-            />
-        </Table>
-        </List>
+    <List>
+      <Table {...tableProps} rowKey="id">
+        <Table.Column dataIndex="title" title="Заголовок" />
+        <Table.Column dataIndex="slug" title="Slug" />
+        <Table.Column 
+          dataIndex="published" 
+          title="Опубликовано" 
+          render={(value) => <BooleanField value={value} />}
+        />
+        <Table.Column 
+          dataIndex="createdAt" 
+          title="Дата создания" 
+          render={(value) => <DateField value={value} format="DD.MM.YYYY" />}
+        />
+        <Table.Column 
+          title="Действия" 
+          render={(_, record: any) => (
+            <Space>
+              <EditButton hideText size="small" recordItemId={record.id} />
+            </Space>
+          )} 
+        />
+      </Table>
+    </List>
+  );
+}
+
+export default function PostListPage() {
+  return (
+    <Suspense fallback={<div>Загрузка списка...</div>}>
+      <PostListContent />
     </Suspense>
-    
   );
 }

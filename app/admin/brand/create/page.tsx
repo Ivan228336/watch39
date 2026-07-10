@@ -5,14 +5,13 @@ import { Suspense } from 'react';
 import { Create, useForm } from "@refinedev/antd";
 import { Form, Input } from "antd";
 
-export default function BrandCreatePage() {
-  // Этот хук автоматически понимает, что мы находимся на маршруте /brand/create
-  // и при сабмите формы отправит POST-запрос в Supabase таблицу 'Brand'
+// 1. Выносим всю логику и хуки в отдельный внутренний компонент
+function BrandCreateForm() {
+  // Теперь хук вызывается ВНУТРИ зоны действия Suspense
   const { formProps, saveButtonProps } = useForm({});
 
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
-        <Create saveButtonProps={saveButtonProps}>
+    <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
         <Form.Item
           label="Название бренда"
@@ -29,10 +28,16 @@ export default function BrandCreatePage() {
         >
           <Input />
         </Form.Item>
-
-        {/* Остальные поля по желанию */}
       </Form>
     </Create>
+  );
+}
+
+// 2. Главная страница просто рендерит форму через Suspense
+export default function BrandCreatePage() {
+  return (
+    <Suspense fallback={<div>Загрузка формы...</div>}>
+      <BrandCreateForm />
     </Suspense>
   );
 }

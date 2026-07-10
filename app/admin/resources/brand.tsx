@@ -1,23 +1,29 @@
-// app/admin/resources/brand.tsx
 'use client';
 
 import { Suspense } from 'react';
 import { List, useTable } from '@refinedev/antd';
 import { Table } from 'antd';
 
-export const BrandList = () => {
+// Внутренний компонент, где вызывается хук таблицы
+const BrandListContent = () => {
   const { tableProps } = useTable();
 
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
-      <List>
-        <Table {...tableProps} rowKey="id">
-          <Table.Column dataIndex="id" title="ID" />
-          <Table.Column dataIndex="name" title="Название" />
-          <Table.Column dataIndex="slug" title="Slug" />
-        </Table>
-      </List>
+    <List>
+      <Table {...tableProps} rowKey="id">
+        <Table.Column dataIndex="id" title="ID" />
+        <Table.Column dataIndex="name" title="Название" />
+        <Table.Column dataIndex="slug" title="Slug" />
+      </Table>
+    </List>
+  );
+};
+
+// Экспортируемый компонент, защищенный Suspense снаружи
+export const BrandList = () => {
+  return (
+    <Suspense fallback={<div>Загрузка списка...</div>}>
+      <BrandListContent />
     </Suspense>
-    
   );
 };
