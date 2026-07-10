@@ -1,7 +1,7 @@
 // app/admin/brand/create/page.tsx
 'use client';
-export const dynamic = 'force-dynamic';
 
+import { Suspense } from 'react';
 import { Create, useForm } from "@refinedev/antd";
 import { Form, Input } from "antd";
 
@@ -11,7 +11,8 @@ export default function BrandCreatePage() {
   const { formProps, saveButtonProps } = useForm({});
 
   return (
-    <Create saveButtonProps={saveButtonProps}>
+    <Suspense fallback={<div>Загрузка...</div>}>
+        <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
         <Form.Item
           label="Название бренда"
@@ -32,5 +33,6 @@ export default function BrandCreatePage() {
         {/* Остальные поля по желанию */}
       </Form>
     </Create>
+    </Suspense>
   );
 }

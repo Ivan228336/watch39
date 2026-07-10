@@ -1,9 +1,12 @@
 // app/admin/brand/page.tsx
 'use client';
 
-export const dynamic = 'force-dynamic';
+import { Suspense } from 'react';
 import { BrandList } from '../resources/brand'; // Поправьте импорт в зависимости от расположения
 
 export default function BrandListPage() {
-  return <BrandList />;
+  <Suspense fallback={<div>Загрузка...</div>}>
+    return <BrandList />;
+  </Suspense>
+  
 }

@@ -1,8 +1,7 @@
 // app/admin/resources/brand.tsx
 'use client';
 
-export const dynamic = 'force-dynamic';
-
+import { Suspense } from 'react';
 import { List, useTable } from '@refinedev/antd';
 import { Table } from 'antd';
 
@@ -10,12 +9,15 @@ export const BrandList = () => {
   const { tableProps } = useTable();
 
   return (
-    <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="id" title="ID" />
-        <Table.Column dataIndex="name" title="Название" />
-        <Table.Column dataIndex="slug" title="Slug" />
-      </Table>
-    </List>
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <List>
+        <Table {...tableProps} rowKey="id">
+          <Table.Column dataIndex="id" title="ID" />
+          <Table.Column dataIndex="name" title="Название" />
+          <Table.Column dataIndex="slug" title="Slug" />
+        </Table>
+      </List>
+    </Suspense>
+    
   );
 };
