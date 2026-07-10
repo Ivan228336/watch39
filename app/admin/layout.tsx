@@ -56,40 +56,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             }}
             resources={[
               { 
-                name: 'brand', 
-                list: '/admin/brand',
-                create: '/admin/brand/create',
-                edit: '/admin/brand/edit/:id',
-                meta: { 
-                  tableName: 'Brand' // 👈 Напишите ТАК, как она называется в Supabase (например 'Brand' или 'brands')
-                }
+                name: 'Brand', 
+                list: '/admin/brand', 
+                create: '/admin/brand/create', 
+                edit: '/admin/brand/edit/:id' 
               },
               { 
-                name: 'category', 
-                list: '/admin/category',
-                create: '/admin/category/create',
-                edit: '/admin/category/edit/:id',
-                meta: { 
-                  tableName: 'Category' // 👈 Точное имя таблицы
-                }
+                name: 'Category', 
+                list: '/admin/category', 
+                create: '/admin/category/create', 
+                edit: '/admin/category/edit/:id' 
               },
               { 
-                name: 'watch', 
-                list: '/admin/watch',
-                create: '/admin/watch/create',
-                edit: '/admin/watch/edit/:id',
-                meta: { 
-                  tableName: 'Watch' // 👈 Например, если в базе с большой буквы
-                }
+                name: 'Watch',  // ← точно как в БД
+                list: '/admin/watch', 
+                create: '/admin/watch/create', 
+                edit: '/admin/watch/edit/:id' 
               },
               { 
-                name: 'post', 
-                list: '/admin/post',
-                create: '/admin/post/create',
-                edit: '/admin/post/edit/:id',
-                meta: { 
-                  tableName: 'Post' // 👈 Точное имя таблицы
-                }
+                name: 'Post', 
+                list: '/admin/post', 
+                create: '/admin/post/create', 
+                edit: '/admin/post/edit/:id' 
               },
             ]}
           >
