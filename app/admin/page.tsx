@@ -1,8 +1,6 @@
-// app/admin/page.tsx
 'use client';
 
-export const dynamic = 'force-dynamic';
-
+import { Suspense } from 'react';
 import { Card, Row, Col, Typography } from "antd";
 import { useNavigation } from "@refinedev/core";
 import {
@@ -14,17 +12,16 @@ import {
 
 const { Title, Text } = Typography;
 
-export default function AdminDashboardPage() {
-  // Хук Refine для программной навигации по ресурсам
+// 1. Выносим логику с хуком useNavigation во внутренний компонент
+function AdminDashboardContent() {
   const { list } = useNavigation();
 
-  // Наш массив с настройками карточек для карты навигации
   const navCards = [
     {
       title: "Часы",
       description: "Каталог товаров, цены и остатки",
       icon: <ClockCircleOutlined style={{ fontSize: '42px', color: '#1677ff' }} />,
-      resource: "watch", // Имя ресурса из app/admin/layout.tsx
+      resource: "watch",
     },
     {
       title: "Бренды",
@@ -55,7 +52,6 @@ export default function AdminDashboardPage() {
         Выберите нужный раздел для начала работы:
       </Text>
 
-      {/* Сетка для карточек. Адаптивная: на телефоне 1 колонка, на ПК 4 колонки */}
       <Row gutter={[24, 24]} style={{ marginTop: "32px" }}>
         {navCards.map((card) => (
           <Col xs={24} sm={12} lg={6} key={card.resource}>
@@ -88,5 +84,14 @@ export default function AdminDashboardPage() {
         ))}
       </Row>
     </div>
+  );
+}
+
+// 2. Оборачиваем дашборд в Suspense
+export default function AdminDashboardPage() {
+  return (
+    <Suspense fallback={<div>Загрузка дашборда...</div>}>
+      <AdminDashboardContent />
+    </Suspense>
   );
 }
