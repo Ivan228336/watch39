@@ -1,22 +1,32 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button, Input, message } from 'antd';
 
 export default function Login() {
   const [password, setPassword] = useState('');
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    const res = await fetch('/api/auth', {
-      method: 'POST',
-      body: JSON.stringify({ password }),
-    });
+    setLoading(true);
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
 
-    if (res.ok) {
-      router.push('/admin');
-    } else {
-      message.error('Доступ запрещен');
+      if (res.ok) {
+        // РАДИКАЛЬНЫЙ РЕДИРЕКТ
+        // Это заставит браузер полностью перезагрузить страницу
+        // и заново пройти через наш proxy.ts (middleware)
+        window.location.assign('/admin');
+      } else {
+        message.error('Неверный пароль');
+      }
+    } catch (err) {
+      message.error('Ошибка сервера');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -25,8 +35,11 @@ export default function Login() {
       <Input.Password 
         style={{ width: 300, marginBottom: 10 }}
         onChange={(e) => setPassword(e.target.value)} 
+        onPressEnter={handleLogin}
       />
-      <Button type="primary" onClick={handleLogin}>Войти</Button>
+      <Button type="primary" loading={loading} onClick={handleLogin}>
+        Войти
+      </Button>
     </div>
   );
 }
