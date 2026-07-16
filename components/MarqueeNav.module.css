@@ -1,0 +1,64 @@
+/* components/MarqueeNav.module.css */
+.track {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  position: relative;
+}
+
+.content {
+  display: flex;
+  gap: 3rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  min-width: max-content;
+  will-change: transform;
+  animation: marquee 60s linear infinite;
+}
+
+.reverse {
+  animation-name: marquee-reverse;
+}
+
+.item {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.catItem {
+  color: #1c1917;
+}
+.catItem:hover {
+  color: #78716c;
+}
+
+.brandItem {
+  color: #57534e;
+  font-weight: 500;
+}
+.brandItem:hover {
+  color: #1c1917;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);   /* старт слева за экраном */
+  }
+  100% {
+    transform: translateX(0%);     /* лента «въезжает» вправо */
+  }
+}

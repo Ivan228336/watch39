@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import Image from 'next/image';
 import { WatchCard } from '@/components/WatchCard';
+import MarqueeNav from "@/components/MarqueeNav";
 import { LocalBusinessSchema } from '@/components/LocalBusinessSchema';
 import { Metadata } from 'next';
 
@@ -84,7 +85,7 @@ export default async function Home() {
         </p>
       </header>
 
-      {/* РУБРИКАТОР (ГЛАВНОЕ МЕНЮ) */}
+      {/* РУБРИКАТОР (ГЛАВНОЕ МЕНЮ)
       {(categories.length > 0 || brands.length > 0) && (
         <nav className="border-b border-stone-300 py-4 mb-12 overflow-x-auto scrollbar-none">
           <ul className="flex items-center justify-center gap-8 md:gap-12 min-w-max px-4">
@@ -105,7 +106,9 @@ export default async function Home() {
             ))}
           </ul>
         </nav>
-      )}
+      )} */}
+
+      <MarqueeNav categories={categories} brands={brands} />
 
       {/* ГЛАВНАЯ ТЕМА (HERO FEATURE) */}
       {heroWatch && (
